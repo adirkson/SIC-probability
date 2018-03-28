@@ -12,7 +12,7 @@ a, b, p, q = 2.3, 6.7, 0.4, 0.0
 rv = beinf(a, b, p, q)
 
 mean, var, skew, kurt = rv.stats(moments='mvsk')
-print "mean, var, skew, kurt", mean, var, skew, kurt
+print "mean, var, skew, kurt:", (mean, var, skew, kurt)
 
 x_l = 0.15
 sip = 1.0 - rv.cdf(x_l)

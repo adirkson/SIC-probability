@@ -17,12 +17,14 @@ First, define some arbitrary BEINF distribution parameters and freeze the distri
    a, b, p, q = 2.3, 6.7, 0.4, 0.0
    rv = beinf(a, b, p, q)
 
-This :code:`rv` object can now be used to call on any of the methods in :py:class:`~scipy.stats.rv_continuous`. For example, we can compute its first few momens
+This :code:`rv` object can now be used to call on any of the methods in :py:class:`~scipy.stats.rv_continuous`. For example, we can compute its first few moments
 
 .. code-block:: python
 
    mean, var, skew, kurt = rv.stats(moments='mvsk')
-   print "mean, var, skew, kurt", mean, var, skew kurt
+   print "mean, var, skew, kurt", (mean, var, skew kurt)
+   >>> mean, var, skew, kurt: (array(0.15333333333333332), array(0.011414814814814813), array(0.3866695010599719), array(0.04263465282284247))
+
 
 We can compute the sea ice probability (SIP) quantity (i.e. the probability that SIC>0.15) using the :py:meth:`~scipy.stats.rv_continuous.cdf` method:
 

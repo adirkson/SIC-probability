@@ -210,8 +210,9 @@
                 <span class="n">skew_bern</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">prob_1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var_bern</span><span class="p">)</span> <span class="c1">#skewness</span>
             
             <span class="k">if</span> <span class="n">var_bern</span><span class="o">==</span><span class="mf">0.0</span><span class="p">:</span>
-                <span class="n">kurt_bern</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># force kurtosis=0 when variance=0            </span>
-            <span class="n">kurt_bern</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">var_bern</span><span class="p">)</span> <span class="o">/</span> <span class="n">var_bern</span> <span class="c1">#kurtosis</span>
+                <span class="n">kurt_bern</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># force kurtosis=0 when variance=0  </span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">kurt_bern</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">var_bern</span><span class="p">)</span> <span class="o">/</span> <span class="n">var_bern</span> <span class="c1">#kurtosis</span>
     
             <span class="c1">#beta statistical moments</span>
             <span class="n">mu_beta</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>   <span class="c1">#mean</span>
