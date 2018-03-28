@@ -168,8 +168,9 @@ class beinf_gen(rv_continuous):
                 skew_bern = (1-2*prob_1) / np.sqrt(var_bern) #skewness
             
             if var_bern==0.0:
-                kurt_bern = 0.0 # force kurtosis=0 when variance=0            
-            kurt_bern = (1.0 - 6*var_bern) / var_bern #kurtosis
+                kurt_bern = 0.0 # force kurtosis=0 when variance=0  
+            else:
+                kurt_bern = (1.0 - 6*var_bern) / var_bern #kurtosis
     
             #beta statistical moments
             mu_beta = a*1.0 / (a + b)   #mean
