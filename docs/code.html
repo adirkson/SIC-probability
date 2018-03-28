@@ -1,0 +1,473 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Documentation &#8212; Prob_SIC_forecasts 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Tutorial" href="tutorial.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-beinf">
+<span id="beinf-zero-and-one-inflated-beta-distribution"></span><h2>beinf (zero- and one- inflated beta distribution)<a class="headerlink" href="#module-beinf" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="beinf.beinf_gen">
+<em class="property">class </em><code class="descclassname">beinf.</code><code class="descname">beinf_gen</code><span class="sig-paren">(</span><em>momtype=1</em>, <em>a=None</em>, <em>b=None</em>, <em>xtol=1e-14</em>, <em>badvalue=None</em>, <em>name=None</em>, <em>longname=None</em>, <em>shapes=None</em>, <em>extradoc=None</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/beinf.html#beinf_gen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#beinf.beinf_gen" title="Permalink to this definition">¶</a></dt>
+<dd><p>A zero- and one- inflated beta (BEINF) random variable</p>
+<dl class="docutils">
+<dt>The probability density function for BEINF is:</dt>
+<dd><div class="first last math">
+\[f(x;a,b,p,q) = p(1-q)\delta(x)+(1-p)f_{\mathrm{beta}}(x;a,b) + pq\delta(x-1)\]</div>
+</dd>
+</dl>
+<p>where</p>
+<blockquote>
+<div><div class="math">
+\[f_{\mathrm{beta}}(x;a,b)=\frac{1}{\mathrm{B}(a,b)}x^{a-1}(1-x)^{b-1},\]</div>
+</div></blockquote>
+<p><span class="math">\(\delta(x)\)</span> is the delta function, and <span class="math">\(\mathrm{B}(a,b)\)</span> is the 
+beta function (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.beta.html#scipy.special.beta" title="(in SciPy v1.0.0)"><code class="xref py py-data docutils literal"><span class="pre">scipy.special.beta</span></code></a>).</p>
+<p><a class="reference internal" href="#module-beinf" title="beinf"><code class="xref py py-class docutils literal"><span class="pre">beinf</span></code></a> takes <span class="math">\(a&gt;0\)</span>, <span class="math">\(b&gt;0\)</span>, <span class="math">\(0\leq p \leq 1\)</span>, <span class="math">\(0\leq q \leq 1\)</span>
+as shape parameters.</p>
+<p><a class="reference internal" href="#module-beinf" title="beinf"><code class="xref py py-class docutils literal"><span class="pre">beinf</span></code></a> is an instance of a subclass of <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.html#scipy.stats.rv_continuous" title="(in SciPy v1.0.0)"><code class="xref py py-class docutils literal"><span class="pre">rv_continuous</span></code></a>, and therefore
+inherits all of the methods within <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.html#scipy.stats.rv_continuous" title="(in SciPy v1.0.0)"><code class="xref py py-class docutils literal"><span class="pre">rv_continuous</span></code></a>. Some of those methods
+have been subclassed here:</p>
+<p><code class="docutils literal"><span class="pre">_argcheck</span></code></p>
+<p><code class="docutils literal"><span class="pre">_cdf</span></code></p>
+<p><code class="docutils literal"><span class="pre">_pdf</span></code></p>
+<p><code class="docutils literal"><span class="pre">_ppf</span></code></p>
+<p><code class="docutils literal"><span class="pre">_stats</span></code></p>
+<p>Additional methods added to <a class="reference internal" href="#module-beinf" title="beinf"><code class="xref py py-class docutils literal"><span class="pre">beinf</span></code></a> are:</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">beta_moments(data_sub)</span></code></dt>
+<dd>Computes the parameters for the beta distribution using the method
+of moments.</dd>
+<dt><code class="docutils literal"><span class="pre">cdf_eval(x,data_params,data)</span></code></dt>
+<dd>Chooses the appropriate method for evaluating the cumulative
+distribution function for data at points x, and computes it.</dd>
+<dt><code class="docutils literal"><span class="pre">check_cases(data)</span></code></dt>
+<dd>Checks to see if data satisfies any of cases 1-4.</dd>
+<dt><code class="docutils literal"><span class="pre">ecdf(x,</span> <span class="pre">X_samp,</span> <span class="pre">p=None,</span> <span class="pre">q=None)</span></code></dt>
+<dd>The empirical distribution function X_samp at points x.</dd>
+<dt><code class="docutils literal"><span class="pre">fit(data)</span></code></dt>
+<dd>This replaces the <code class="docutils literal"><span class="pre">fit</span></code> method in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.html#scipy.stats.rv_continuous" title="(in SciPy v1.0.0)"><code class="xref py py-class docutils literal"><span class="pre">rv_continuous</span></code></a>, but
+is not subclassed. Computes the MLE parameters for the BEINF distribution.</dd>
+<dt><code class="docutils literal"><span class="pre">fit_beta(data_sub)</span></code></dt>
+<dd>Computes the MLE parameters for the beta distribution.</dd>
+</dl>
+<dl class="method">
+<dt id="beinf.beinf_gen.beta_moments">
+<code class="descname">beta_moments</code><span class="sig-paren">(</span><em>data_sub</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/beinf.html#beinf_gen.beta_moments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#beinf.beinf_gen.beta_moments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the method of moments estimates of <cite>a</cite> and <cite>b</cite> for the
+beta distribution.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>data_sub (ndarray):</dt>
+<dd>The data to be fit to the beta distribution. The values in 
+data_sub should lie on the open interval (0,1).</dd>
+</dl>
+</dd>
+<dt>Returns: a,b (floats):</dt>
+<dd>The shape parameters for the beta distribution.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="beinf.beinf_gen.cdf_eval">
+<code class="descname">cdf_eval</code><span class="sig-paren">(</span><em>x</em>, <em>data_params</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/beinf.html#beinf_gen.cdf_eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#beinf.beinf_gen.cdf_eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates the cumulative distribution function (empirically or parametrically)
+for a random variable <span class="math">\(X\sim\mathrm{BEINF}(a,b,p,q)\)</span>. When
+<span class="math">\(a\)</span> and <span class="math">\(b\)</span> are unkown (i.e. when <code class="code docutils literal"><span class="pre">a=np.inf</span></code>
+and <code class="code docutils literal"><span class="pre">b=np.inf</span></code>), 
+the cdf is evaluated using <a class="reference internal" href="#beinf.beinf_gen.ecdf" title="beinf.beinf_gen.ecdf"><code class="xref py py-meth docutils literal"><span class="pre">ecdf()</span></code></a>. When <span class="math">\(a\)</span> 
+and <span class="math">\(b\)</span> are known <cite>or</cite> when <span class="math">\(p=1\)</span>, the cdf is 
+evaluated using <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.cdf.html#scipy.stats.rv_continuous.cdf" title="(in SciPy v1.0.0)"><code class="xref py py-meth docutils literal"><span class="pre">cdf()</span></code></a>. This is used
+after applying TAQM (see the tutorial on using the <a class="reference internal" href="#module-taqm" title="taqm"><code class="xref py py-class docutils literal"><span class="pre">taqm</span></code></a> class).</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>x (float or ndarray):</dt>
+<dd>The value(s) at which the ecdf is evaluated.</dd>
+<dt>data_params (ndarray):</dt>
+<dd>An array containing the four parameters a, b, p, and q.</dd>
+<dt>data (ndarray):</dt>
+<dd>The data which defines the ecdf when <span class="math">\(a\)</span> and <span class="math">\(b\)</span>
+are unknown (i.e. when <code class="code docutils literal"><span class="pre">a=np.inf</span></code> and <code class="code docutils literal"><span class="pre">b=np.inf</span></code>).
+This array may contain the values <code class="code docutils literal"><span class="pre">np.inf</span></code>,
+0, and 1.</dd>
+</dl>
+</dd>
+<dt>Returns: cdf_vals (ndarry):       </dt>
+<dd>The cdf or ecdf for <span class="math">\(X\sim\mathrm{BEINF}(a,b,p,q)\)</span>
+evaluated at x.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="beinf.beinf_gen.check_cases">
+<code class="descname">check_cases</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/beinf.html#beinf_gen.check_cases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#beinf.beinf_gen.check_cases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether data satisfies any of cases 1-4 described in
+Section 3b of Dirkson et al, 2018. When True, the parameters a 
+and b for the beta-portion of the BEINF distribution cannot be fit.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>data (ndarray):</dt>
+<dd>The values for which to test if cases 1-4 apply.</dd>
+</dl>
+</dd>
+<dt>Returns: <cite>True</cite> or <cite>False</cite></dt>
+<dd>Boolean value of <cite>True</cite> or <cite>False</cite>. <cite>True</cite> if any of the cases 
+are satisfied; <cite>False</cite> if all of the cases are
+not satisfied.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="beinf.beinf_gen.ecdf">
+<code class="descname">ecdf</code><span class="sig-paren">(</span><em>x</em>, <em>X_samp</em>, <em>p=None</em>, <em>q=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/beinf.html#beinf_gen.ecdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#beinf.beinf_gen.ecdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>For computing the empirical cumulative distribution function (ecdf) 
+for a random variable <span class="math">\(X\sim\mathrm{BEINF}(a,b,p,q)\)</span> when the parameters 
+<span class="math">\(a\)</span> and <span class="math">\(b\)</span> (or additionally <span class="math">\(p\)</span> and <span class="math">\(q\)</span>) are unkown.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>x (float or ndarray):</dt>
+<dd>The value(s) at which the ecdf is evaluated</dd>
+<dt>X_samp (float or ndarray):</dt>
+<dd>A sample that lies on the either: the open
+interval (0,1) when p and q <strong>are</strong> included as
+arguments, <cite>or</cite> the closed interval
+[0,1] when p and q <strong>are not</strong> included as arguments.</dd>
+<dt>p (float, optional):</dt>
+<dd>Shape parameter(s) for the beinf distribution.</dd>
+<dt>q (float, optional):</dt>
+<dd>Shape parameter(s) for the beinf distribution.</dd>
+</dl>
+</dd>
+<dt>Returns: ecdf_vals (ndarray):            </dt>
+<dd>The ecdf for X_samp, evaluated at x.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="beinf.beinf_gen.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/beinf.html#beinf_gen.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#beinf.beinf_gen.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the MLE parameters <span class="math">\(a\)</span>, <span class="math">\(b\)</span>, <span class="math">\(p\)</span>, 
+and <span class="math">\(q\)</span> for the BEINF distribution to the given data.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>data (ndarray):</dt>
+<dd>The data to be fit to the BEINF distribution.</dd>
+</dl>
+</dd>
+<dt>Returns: a,b, p, q (floats):</dt>
+<dd>The shape parameters for the BEINF distribution. When <span class="math">\(a\)</span>
+and <span class="math">\(b\)</span> cannot be fit, they are returned as 
+<code class="code docutils literal"><span class="pre">a=np.inf</span></code> and <code class="code docutils literal"><span class="pre">b=np.inf</span></code>.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="beinf.beinf_gen.fit_beta">
+<code class="descname">fit_beta</code><span class="sig-paren">(</span><em>data_sub</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/beinf.html#beinf_gen.fit_beta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#beinf.beinf_gen.fit_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the MLE parameters <span class="math">\(a\)</span> and <span class="math">\(b\)</span> for the 
+beta distribution to the given data.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>data_sub (ndarray):</dt>
+<dd>The data to be fit to the beta distribution. The values in
+data_sub should lie on the open interval (0,1).</dd>
+</dl>
+</dd>
+<dt>Returns: a,b (floats):</dt>
+<dd>The shape parameters for the beta distribution.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-taqm">
+<span id="taqm-trend-adjusted-quantile-mapping"></span><h2>taqm (trend-adjusted quantile mapping)<a class="headerlink" href="#module-taqm" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="taqm.taqm">
+<em class="property">class </em><code class="descclassname">taqm.</code><code class="descname">taqm</code><a class="reference internal" href="_modules/taqm.html#taqm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taqm.taqm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains the methods needed for performing trend-adjusted quantile mapping (TAQM).
+It relies on the methods from the <a class="reference internal" href="#module-beinf" title="beinf"><code class="xref py py-class docutils literal"><span class="pre">beinf</span></code></a> class.</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">calibrate(x_params,y_params,x_t_params,X,Y,X_t,trust_sharp_fcst=False)</span></code>  </dt>
+<dd>calibrated forecast BEINF parameters and calibrated forecast ensemble</dd>
+<dt><code class="docutils literal"><span class="pre">fit_data(X,Y,X_t)</span></code> </dt>
+<dd>BEINF parameters for the TAMH, TAOH, and the raw forecast</dd>
+<dt><code class="docutils literal"><span class="pre">lin(m,b,T)</span></code> </dt>
+<dd>linear equation values</dd>
+<dt><code class="docutils literal"><span class="pre">piecewise_lin(m1,b1,m2,b2,t_b,T)</span></code> </dt>
+<dd>piece-wise linear equation values</dd>
+<dt><code class="docutils literal"><span class="pre">trend_adjust_1p(data_all,tau_t,t)</span></code>  </dt>
+<dd>trend-adjusted values using a single period</dd>
+<dt><code class="docutils literal"><span class="pre">trend_adjust_2p(data_all,tau_t,t,t_b=1999)</span></code>  </dt>
+<dd>trend-adjusted values using two periods</dd>
+</dl>
+<dl class="method">
+<dt id="taqm.taqm.calibrate">
+<code class="descname">calibrate</code><span class="sig-paren">(</span><em>x_params</em>, <em>y_params</em>, <em>x_t_params</em>, <em>X</em>, <em>Y</em>, <em>X_t</em>, <em>trust_sharp_fcst=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taqm.html#taqm.calibrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taqm.taqm.calibrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibrates the raw forecast BEINF paramaters <span class="math">\(a_{x_t}\)</span>,
+<span class="math">\(b_{x_t}\)</span>, <span class="math">\(p_{x_t}\)</span> and <span class="math">\(q_{x_t}\)</span>. This method 
+carries out the calibration step described in section 5c in Dirkson et al, 2018.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>x_params (ndarray):</dt>
+<dd>An array containing the four parameters of the BEINF distribution
+for the TAMH ensemble time series.</dd>
+<dt>y_params (ndarray):</dt>
+<dd>An array containing the four parameters of the BEINF distribution
+for the TAOH time series.</dd>
+<dt>x_t_params (ndarray):</dt>
+<dd>An array containing the four parameters of the BEINF distribution
+for the raw forecast ensemble.</dd>
+<dt>trust_sharp_fcst (boolean, optional):</dt>
+<dd><cite>True</cite> to revert to the raw forecast when 
+<span class="math">\(p_{x_t}=1\)</span>. <cite>False</cite> 
+to revert to the TAOH distribution when <span class="math">\(p_{x_t}=1\)</span>.</dd>
+</dl>
+</dd>
+<dt>Returns: x_t_cal_params (ndarray), X_t_cal_beta (ndarray):</dt>
+<dd><p class="first">x_t_cal_params contains the four BEINF
+distribution parameters for the calibrated forecast: <span class="math">\(a_{\hat{x}_t}\)</span>, <span class="math">\(b_{\hat{x}_t}\)</span>, 
+<span class="math">\(p_{\hat{x}_t}\)</span> and <span class="math">\(q_{\hat{x}_t}\)</span>. When  <span class="math">\(a_{\hat{x}_t}\)</span> and <span class="math">\(b_{\hat{x}_t}\)</span>
+could not be fit, they are returned as <code class="code docutils literal"><span class="pre">a=np.inf</span></code> and <code class="code docutils literal"><span class="pre">b=np.inf</span></code>.</p>
+<p class="last">X_t_cal_beta contains the calibrated forecast ensemble (np.inf replaces replace 0’s and 1’s in the 
+ensemble). This array contains all <code class="code docutils literal"><span class="pre">np.inf</span></code> values when any of <span class="math">\(p_y=1\)</span>,
+<span class="math">\(p_x=1\)</span>, or <span class="math">\(p_{x_t}=1\)</span>, or when all parameters in x_t_cal_params are defined (none are equal to <code class="code docutils literal"><span class="pre">np.inf</span></code>).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taqm.taqm.fit_params">
+<code class="descname">fit_params</code><span class="sig-paren">(</span><em>X</em>, <em>Y</em>, <em>X_t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taqm.html#taqm.fit_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taqm.taqm.fit_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits X (the TAMH ensemble time series), Y (the TAOH time series), and X_t (the raw forecast ensemble) to the BEINF
+distribution. This method carries out the fiting procedure described in 
+section 5b of Dirkson et al, 2018.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>X (ndarray):</dt>
+<dd>The TAMH ensemble time series of size NxM.</dd>
+<dt>Y (ndarray):</dt>
+<dd>The TAOH time series of size N.</dd>
+<dt>X_t (ndarray):</dt>
+<dd>The raw forecast ensemble of size M.</dd>
+</dl>
+</dd>
+<dt>Returns: x_params (ndarray), y_params (ndarray), x_t_params (ndarray):</dt>
+<dd>The shape parameters <span class="math">\(a\)</span>,
+<span class="math">\(b\)</span>, <span class="math">\(p\)</span>, <span class="math">\(q\)</span>
+for the BEINF distribution fitted to each  
+X, Y, and X_t  (see <code class="xref py py-meth docutils literal"><span class="pre">beinf.fit()</span></code>).</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taqm.taqm.lin">
+<code class="descname">lin</code><span class="sig-paren">(</span><em>a1</em>, <em>b1</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taqm.html#taqm.lin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taqm.taqm.lin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates the piece-wise linear equation</p>
+<blockquote>
+<div><div class="math" id="equation-pw1">
+<span class="eqno">(1)<a class="headerlink" href="#equation-pw1" title="Permalink to this equation">¶</a></span>\[z = a_1 T + b_1                           \]</div>
+</div></blockquote>
+<p>at <span class="math">\(T\)</span>.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>a1 (float):</dt>
+<dd>The slope in <a class="reference internal" href="#equation-pw1">(1)</a>.</dd>
+<dt>b1 (float):</dt>
+<dd>The z-intercept in
+<a class="reference internal" href="#equation-pw1">(1)</a>.</dd>
+<dt>t_b (float):</dt>
+<dd>The breakpoint for <span class="math">\(z\)</span> in <a class="reference internal" href="#equation-pw1">(1)</a>.</dd>
+<dt>T (float or ndarray):</dt>
+<dd>The point(s) at which <a class="reference internal" href="#equation-pw1">(1)</a> is evaluated.</dd>
+</dl>
+</dd>
+<dt>Returns: z (float or ndarray):</dt>
+<dd>The value of <a class="reference internal" href="#equation-pw1">(1)</a> at each point T. Values 
+less than 0 and greater than 1
+are clipped to 0 and 1, respectively.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taqm.taqm.piecewise_lin">
+<code class="descname">piecewise_lin</code><span class="sig-paren">(</span><em>a1</em>, <em>b1</em>, <em>a2</em>, <em>b2</em>, <em>t_b</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taqm.html#taqm.piecewise_lin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taqm.taqm.piecewise_lin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates the piece-wise linear equation</p>
+<blockquote>
+<div><div class="math" id="equation-pw2">
+<span class="eqno">(2)<a class="headerlink" href="#equation-pw2" title="Permalink to this equation">¶</a></span>\[\begin{split}z = \begin{cases} 
+        a_1 T + b_1, &amp; T&lt;t_b \\
+        a_2 T + b_2, &amp; T&gt;t_b
+    \end{cases}                           \end{split}\]</div>
+</div></blockquote>
+<p>at <span class="math">\(T\)</span>.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>a1, a2 (floats):</dt>
+<dd>The slopes in <a class="reference internal" href="#equation-pw2">(2)</a>.</dd>
+<dt>b1, b2 (floats):</dt>
+<dd>The z-intercepts in
+<a class="reference internal" href="#equation-pw2">(2)</a>.</dd>
+<dt>t_b (float):</dt>
+<dd>The breakpoint for <span class="math">\(z\)</span> in <a class="reference internal" href="#equation-pw2">(2)</a>.</dd>
+<dt>T (float or ndarray):</dt>
+<dd>The point(s) at which <a class="reference internal" href="#equation-pw2">(2)</a> is evaluated.</dd>
+</dl>
+</dd>
+<dt>Returns: z (float or ndarray):</dt>
+<dd>The value of <a class="reference internal" href="#equation-pw2">(2)</a> at each point T. Values 
+less than 0 and greater than 1
+are clipped to 0 and 1, respectively.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taqm.taqm.trend_adjust_1p">
+<code class="descname">trend_adjust_1p</code><span class="sig-paren">(</span><em>data_all</em>, <em>tau_t</em>, <em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taqm.html#taqm.trend_adjust_1p"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taqm.taqm.trend_adjust_1p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linearly detrend data_all and re-center about its
+linear least squares fit evaluated at 
+<span class="math">\(T=t\)</span>. One may want to use
+this trend adjustment over <a class="reference internal" href="#taqm.taqm.trend_adjust_2p" title="taqm.taqm.trend_adjust_2p"><code class="xref py py-func docutils literal"><span class="pre">trend_adjust_2p()</span></code></a> 
+if the hindcast record is over the more recent record.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>data_all (ndarray):</dt>
+<dd>A time series of size N, or an ensemble time series of size NxM,
+where M is the number of ensemble members.</dd>
+<dt>tau_t (ndarray):</dt>
+<dd>All hindcast years exluding the forecast year.</dd>
+<dt>t (float):</dt>
+<dd>The forecast year.</dd>
+</dl>
+</dd>
+<dt>Returns: data_ta (ndarray):</dt>
+<dd>Trend-adjusted values with same shape as data_all.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taqm.taqm.trend_adjust_2p">
+<code class="descname">trend_adjust_2p</code><span class="sig-paren">(</span><em>data_all</em>, <em>tau_t</em>, <em>t</em>, <em>t_b=1999</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taqm.html#taqm.trend_adjust_2p"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taqm.taqm.trend_adjust_2p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linearly detrend data_all and re-center it about its
+non-linear least squares fit to Eq. <a class="reference internal" href="#equation-pw2">(2)</a> evaluated at 
+<span class="math">\(T=\)</span> <cite>t</cite>. This method carries
+out the trend-adjustment technique described in section 5a
+of Dirkson et al, 2018</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>data_all (ndarray):</dt>
+<dd>A time series of size N, or an ensemble time series of size NxM,
+where M is the number of ensemble members.</dd>
+<dt>tau_t (ndarray):</dt>
+<dd>All hindcast years exluding the forecast year <cite>t</cite>.</dd>
+<dt>t (float):</dt>
+<dd>The forecast year.</dd>
+<dt>t_b (float):</dt>
+<dd>The breakpoint year in Eq. <a class="reference internal" href="#equation-pw2">(2)</a>.</dd>
+</dl>
+</dd>
+<dt>Returns: data_ta (ndarray):</dt>
+<dd>Trend-adjusted values with same shape as data_all.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tutorial.html" title="previous chapter">Tutorial</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Arlan Dirkson.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/code.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
