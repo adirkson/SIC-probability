@@ -1,6 +1,6 @@
 # SIC-probability
 
-The classes in this module can be found in the folder `/classes`.
+The classes in this module can be found in the beinf.py and taqm.py files in the folder `/classes`.
 
 The documentation and tutorials for this module can be found at https://adirkson.github.io/SIC-probability/.
 
