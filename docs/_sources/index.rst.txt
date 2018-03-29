@@ -7,9 +7,9 @@ Calibrated Probabilistic Forecasts of Sea Ice Concentration
 ===========================================================
 This module is for making probabilistic forecasts of sea ice concentration (SIC) using the methods described in Dirkson et al, 2018. The user should refer to this paper for further details.
 
-It consists of two classes: :class:`beinf` and :class:`taqm`. The :class:`beinf` class is used to fit SIC data to the zero- and one- inflated beta (BEINF) distribution (Ospina and Ferrari, 2010), and to freeze BEINF distribution objects that can be used to compute e.g. its pdf, its cdf, random variates. The :class:`taqm` class is used to carry out the trend adjusted quantile mapping (TAQM) calibration method. Both of these classes are to be applied at the individual grid cell level, examples for which are included in the tutorial below. 
+It consists of two classes: :class:`beinf` and :class:`taqm`. The :class:`beinf` class is used to fit SIC data to the zero- and one- inflated beta (BEINF) distribution (Ospina and Ferrari, 2010), and to freeze BEINF distribution objects that can be used to compute e.g. its pdf, its cdf, random variates. The :class:`taqm` class is used to carry out the trend adjusted quantile mapping (TAQM) calibration method. The methods in both of these classes should be applied at the individual grid cell level. Examples are included in the tutorial below, and a template for using the :class:`taqm` class is available at https://github.com/adirkson/SIC-probability (see the 'README.md' file for accessing this file).  
 
-This project was built in Python v2.7 and relies on the classes `beinf.py` and `taqm.py` available at https://github.com/adirkson/SIC-probability.
+This project was built in Python v2.7 and relies on the classes 'beinf.py' and 'taqm.py' available at https://github.com/adirkson/SIC-probability (see the 'README.md' file for accessing these files).
 
 Contents
 ---------
