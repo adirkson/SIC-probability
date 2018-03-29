@@ -275,7 +275,7 @@ This is how we can calculate the CRPS for this forecast based on the observed va
 ^^^^^^^^^^
 Example 2 
 ^^^^^^^^^^
-For a situation when one of cases 2-4 are encountered (for any of the TAMH, TAOH, or raw forecast), as said before, we can actually use the exact same code used in Example 1. Of course different data are loaded. In this case, the forecast distribution satisfies case 2 (all but one ensemble member are 0's and 1's)
+For a situation when one of cases 2-4 are encountered (for any of the TAMH, TAOH, or raw forecast), we'll actually use the exact same code used in Example 1. Of course different data are loaded. In this case, the forecast distribution satisfies case 2 (all but one ensemble member are 0's and 1's)
 
 .. code-block:: python
 
