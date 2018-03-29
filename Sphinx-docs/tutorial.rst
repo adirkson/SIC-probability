@@ -4,7 +4,7 @@ Tutorial
 Zero- and One- Inflated Beta Distribution 
 -----------------------------------------
 
-Here, we'll go through some of the ways the :class:`beinf` class can be utilized. The :class:`beinf` class is an instance of a subclass of :py:class:`~scipy.stats.rv_continuous`, and therefore inherits all of the methods from :py:class:`~scipy.stats.rv_continuous`. In addition, some methods have been added that aren't included in :py:class:`~scipy.stats.rv_continuous` that are useful for applying the BEINF distibution to the sea ice concentration (SIC) variable (see the documentation for the :class:`beinf` class).
+Here, we'll go through some of the ways the :class:`beinf` class can be utilized. The :class:`beinf` class is an instance of a subclass of :py:class:`~scipy.stats.rv_continuous`, and therefore inherits all of the methods from :py:class:`~scipy.stats.rv_continuous`. In addition, some methods have been added that aren't included in :py:class:`~scipy.stats.rv_continuous` that are useful for applying the BEINF distribution to the sea ice concentration (SIC) variable (see the documentation for the :class:`beinf` class).
 
 First, define some arbitrary BEINF distribution parameters and freeze the distribution object
 
@@ -66,7 +66,7 @@ Alternatively, we can plot its pdf and cdf over the interval [0,1] using the :py
 
 .. plot:: pyplots/beinf_example1.py
 
-Now, we'll generate some random variates from this distribution using the :py:meth:`~scipy.stats.rv_continuous.rvs`) method, and plot its histogram and empirical cumulative distribution function (utlilizing the added :meth:`~beinf.beinf_gen.ecdf` method) along with the original distribution:
+Now, we'll generate some random variates from this distribution using the :py:meth:`~scipy.stats.rv_continuous.rvs`) method, and plot its histogram and empirical cumulative distribution function (utilizing the added :meth:`~beinf.beinf_gen.ecdf` method) along with the original distribution:
 
 .. code-block:: python
 
@@ -134,7 +134,7 @@ Define the time variables relevant to calibration. The complete hindcast record 
    tau_t = tau[tau!=t]   # remove the forecast year from tau and call it tau_t
 
 
-Load the model historical (MH) ensmeble time series, observed historical (OH) time series, and the forecast ensemble. MH and OH do not contain the data for year :math:`t`.
+Load the model historical (MH) ensemble time series, observed historical (OH) time series, and the forecast ensemble. MH and OH do not contain the data for year :math:`t`.
 
 .. code-block:: python
 
@@ -235,7 +235,7 @@ Finally, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cd
    # Evaluate cdf for the forecast distribution at x 
    cdf_x_t = beinf.cdf_eval(x,X_t_params,X_t)
 
-To evaluate the cdf for the calibrated forecast ensemble, it's sligtly more complicated. This is because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (as described above). These complications can be accounted for though simply using this :code:`if-else` statement.
+To evaluate the cdf for the calibrated forecast ensemble, it's slightly more complicated. This is because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (as described above). These complications can be accounted for though simply using this :code:`if-else` statement.
 
 .. code-block:: python
 
@@ -417,7 +417,7 @@ and CRPS values:
    print crps_x_t_cal
    >>> 0.133379212736
 
-In this particular case, we would thus have achieved a more skilful forecast by reverting to the TAOH distribution and not the raw forecast.
+In this particular case, we would thus have achieved a more skillful forecast by reverting to the TAOH distribution and not the raw forecast.
 
 
 
