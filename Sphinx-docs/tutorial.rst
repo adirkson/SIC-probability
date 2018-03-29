@@ -108,7 +108,7 @@ Trend-adjusted Quantile Mapping
 
 This section of the tutorial shows how to apply trend-adjusted quantile mapping (TAQM) using the :class:`taqm` class. The methods in this class are meant to be applied to the SIC variable at an individual grid cell. 
 
-In Example 1, we'll show how TAQM works for a grid cell for which the trend-adjusted modelled historical (TAMH) ensemble time series, the trend-adjusted observed historical (TAOH) time series, and the forecast ensemble can all be fit to the BEINF distribution (i.e. cases 1-4 are not encountered for any of these data samples). In Example 2, we'll show what happens when one of cases 2-4 is encountered. In Example 3, we'll go through a situation when case 1 is encountered (i.e. one of :math:`p_x=1`, :math:`p_y=1`, or :math:`p_{x_t}=1`). The template provided in Example 1 can be used in all three of these examples.
+In Example 1, we'll show how TAQM works for a grid cell for which the trend-adjusted modelled historical (TAMH) ensemble time series, the trend-adjusted observed historical (TAOH) time series, and the forecast ensemble can all be fit to the BEINF distribution (i.e. cases 1-4 are not encountered for any of these data samples). In Example 2, we'll show what happens when one of cases 2-4 is encountered. In Example 3, we'll go through a situation when case 1 is encountered (i.e. one of :math:`p_x=1`, :math:`p_y=1`, or :math:`p_{x_t}=1`). 
 
 ^^^^^^^^^^
 Example 1 
@@ -275,7 +275,7 @@ This is how we can calculate the CRPS for this forecast based on the observed va
 ^^^^^^^^^^
 Example 2 
 ^^^^^^^^^^
-For a situation when one of cases 2-4 are encountered (for any of the TAMH, TAOH, or raw forecast), as said before, we can actually use the exact same code used in Example 1. Of course different data are loaded. In this case, the forecast distribution satisfies case 2 (all but one ensemble member are 0's and 1's)
+For a situation when one of cases 2-4 are encountered (for any of the TAMH, TAOH, or raw forecast), we'll actually use the exact same code used in Example 1. Of course different data are loaded. In this case, the forecast distribution satisfies case 2 (all but one ensemble member are 0's and 1's)
 
 .. code-block:: python
 

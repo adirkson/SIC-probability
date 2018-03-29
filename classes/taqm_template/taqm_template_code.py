@@ -56,7 +56,10 @@ X_ta_params, Y_ta_params, X_t_params = taqm.fit_params(X_ta,Y_ta,X_t)
 
 # Calibrate forecast
 trust_sharp_fcst = False # to revert to TAOH when p=1 for forecast
-#trust_sharp_fcst = True  # to revert to raw forecast when p=1 for forecast
+# uncomment line 61 to revert to raw forecast when 
+# p=1 for forecast
+#trust_sharp_fcst = True 
+ 
 X_t_cal_params, X_t_cal = taqm.calibrate(X_ta_params, Y_ta_params, X_t_params,
                                                    X_ta, Y_ta, X_t,trust_sharp_fcst) 
 
