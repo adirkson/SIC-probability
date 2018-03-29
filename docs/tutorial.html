@@ -94,7 +94,6 @@
                     <span class="n">wspace</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href="./pyplots/beinf_example1.py">Source code</a>, <a class="reference external" href="./pyplots/beinf_example1.png">png</a>, <a class="reference external" href="./pyplots/beinf_example1.hires.png">hires.png</a>, <a class="reference external" href="./pyplots/beinf_example1.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="_images/beinf_example1.png" src="_images/beinf_example1.png" />
 </div>
@@ -102,14 +101,13 @@
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">nsamples</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">rv</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">nsamples</span><span class="p">)</span> <span class="c1"># draw random sample</span>
 
-<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span><span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;stepfilled&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;sample hist&#39;</span><span class="p">,</span><span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;stepfilled&#39;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span> <span class="c1">#update legend</span>
 
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">beinf</span><span class="o">.</span><span class="n">ecdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">X</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;ecdf&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">beinf</span><span class="o">.</span><span class="n">ecdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">X</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;sample ecdf&#39;</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href="./pyplots/beinf_example2.py">Source code</a>, <a class="reference external" href="./pyplots/beinf_example2.png">png</a>, <a class="reference external" href="./pyplots/beinf_example2.hires.png">hires.png</a>, <a class="reference external" href="./pyplots/beinf_example2.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="_images/beinf_example2.png" src="_images/beinf_example2.png" />
 </div>
@@ -128,7 +126,6 @@
 <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>   <span class="c1">#update legend</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href="./pyplots/beinf_example3.py">Source code</a>, <a class="reference external" href="./pyplots/beinf_example3.png">png</a>, <a class="reference external" href="./pyplots/beinf_example3.hires.png">hires.png</a>, <a class="reference external" href="./pyplots/beinf_example3.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="_images/beinf_example3.png" src="_images/beinf_example3.png" />
 </div>
@@ -149,7 +146,7 @@
 
 <span class="c1"># Time</span>
 <span class="n">tau_s</span> <span class="o">=</span> <span class="mi">1981</span>    <span class="c1">#start year</span>
-<span class="n">tau_f</span> <span class="o">=</span> <span class="mi">2012</span>    <span class="c1">#finish</span>
+<span class="n">tau_f</span> <span class="o">=</span> <span class="mi">2012</span>    <span class="c1">#finish year</span>
 <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">tau_s</span><span class="p">,</span><span class="n">tau_f</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>  <span class="c1">#array of years in hindcast record</span>
 
 <span class="n">t</span> <span class="o">=</span> <span class="mi">2011</span>   <span class="c1">#forecast year</span>
@@ -164,14 +161,14 @@
 <span class="n">Y_t</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1">#made-up observation</span>
 </pre></div>
 </div>
-<p>Instantiate a taqm object, and perform the trend-adjustment on the MH and OH data using the <a class="reference internal" href="code.html#taqm.taqm.trend_adjust_2p" title="taqm.taqm.trend_adjust_2p"><code class="xref py py-func docutils literal"><span class="pre">trend_adjust_2p()</span></code></a> method in the <a class="reference internal" href="code.html#module-taqm" title="taqm"><code class="xref py py-class docutils literal"><span class="pre">taqm</span></code></a> class.</p>
+<p>Instantiate a <a class="reference internal" href="code.html#module-taqm" title="taqm"><code class="xref py py-class docutils literal"><span class="pre">taqm</span></code></a> object, and perform the trend-adjustment on the MH and OH data using the <a class="reference internal" href="code.html#taqm.taqm.trend_adjust_2p" title="taqm.taqm.trend_adjust_2p"><code class="xref py py-func docutils literal"><span class="pre">trend_adjust_2p()</span></code></a> method.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">taqm</span> <span class="o">=</span> <span class="n">taqm</span><span class="p">()</span>
 
 <span class="c1"># Get TAMH from MH</span>
 <span class="n">pval_x</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span><span class="n">tau_t</span><span class="p">,</span><span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))[</span><span class="mi">3</span><span class="p">]</span>  <span class="c1">#check the p-value for MH trend over tau_t</span>
 <span class="k">if</span> <span class="n">pval_x</span><span class="o">&lt;</span><span class="mf">0.05</span><span class="p">:</span>
     <span class="c1"># if significant, then adjust MH for the trend to create TAMH</span>
-    <span class="n">X_ta</span> <span class="o">=</span> <span class="n">taqm</span><span class="o">.</span><span class="n">taqm</span><span class="o">.</span><span class="n">trend_adjust_2p</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">tau_t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t_b</span><span class="o">=</span><span class="mi">1999</span><span class="p">)</span>
+    <span class="n">X_ta</span> <span class="o">=</span> <span class="n">taqm</span><span class="o">.</span><span class="n">trend_adjust_2p</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">tau_t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t_b</span><span class="o">=</span><span class="mi">1999</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="c1"># else, set TAMH equal to MH (i.e. don&#39;t perform the trend adjustment)</span>
     <span class="n">X_ta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
@@ -187,7 +184,6 @@
 </pre></div>
 </div>
 <p>The following is a plot of the <code class="code docutils literal"><span class="pre">X</span></code> and <code class="code docutils literal"><span class="pre">Y</span></code> (top panel) , and <code class="code docutils literal"><span class="pre">X_ta</span></code> and <code class="code docutils literal"><span class="pre">Y_ta</span></code> (bottom panel), with the ensemble range for <code class="code docutils literal"><span class="pre">X</span></code> and <code class="code docutils literal"><span class="pre">X_ta</span></code> encapsulated in the shaded area.</p>
-<p>(<a class="reference external" href="./pyplots/taqm_example1_trendadjust.py">Source code</a>, <a class="reference external" href="./pyplots/taqm_example1_trendadjust.png">png</a>, <a class="reference external" href="./pyplots/taqm_example1_trendadjust.hires.png">hires.png</a>, <a class="reference external" href="./pyplots/taqm_example1_trendadjust.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="_images/taqm_example1_trendadjust.png" src="_images/taqm_example1_trendadjust.png" />
 </div>
@@ -250,7 +246,6 @@
 </pre></div>
 </div>
 <p>Here are the cdfs for each of these distributions</p>
-<p>(<a class="reference external" href="./pyplots/taqm_example1_cdfs.py">Source code</a>, <a class="reference external" href="./pyplots/taqm_example1_cdfs.png">png</a>, <a class="reference external" href="./pyplots/taqm_example1_cdfs.hires.png">hires.png</a>, <a class="reference external" href="./pyplots/taqm_example1_cdfs.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="_images/taqm_example1_cdfs.png" src="_images/taqm_example1_cdfs.png" />
 </div>
@@ -292,8 +287,7 @@
       <span class="n">inf</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Using the <a class="reference internal" href="code.html#beinf.beinf_gen.cdf_eval" title="beinf.beinf_gen.cdf_eval"><code class="xref py py-meth docutils literal"><span class="pre">cdf_eval()</span></code></a> (as in Example 1), the following TAMH, TAOH, raw forecast, and calibrated forecast cdfs can be seen to be:</p>
-<p>(<a class="reference external" href="./pyplots/taqm_example2.py">Source code</a>, <a class="reference external" href="./pyplots/taqm_example2.png">png</a>, <a class="reference external" href="./pyplots/taqm_example2.hires.png">hires.png</a>, <a class="reference external" href="./pyplots/taqm_example2.pdf">pdf</a>)</p>
+<p>Using the <a class="reference internal" href="code.html#beinf.beinf_gen.cdf_eval" title="beinf.beinf_gen.cdf_eval"><code class="xref py py-meth docutils literal"><span class="pre">cdf_eval()</span></code></a> (as in Example 1), the TAMH, TAOH, raw forecast, and calibrated forecast cdfs can be plotted:</p>
 <div class="figure">
 <img alt="_images/taqm_example2.png" src="_images/taqm_example2.png" />
 </div>
@@ -341,7 +335,6 @@
 </pre></div>
 </div>
 <p>The cdfs for the TAMH, TAOH, raw forecast, and calibrated forecast computed using <a class="reference internal" href="code.html#beinf.beinf_gen.cdf_eval" title="beinf.beinf_gen.cdf_eval"><code class="xref py py-meth docutils literal"><span class="pre">cdf_eval()</span></code></a> can be seen in the following plot:</p>
-<p>(<a class="reference external" href="./pyplots/taqm_example3_TrustRaw.py">Source code</a>, <a class="reference external" href="./pyplots/taqm_example3_TrustRaw.png">png</a>, <a class="reference external" href="./pyplots/taqm_example3_TrustRaw.hires.png">hires.png</a>, <a class="reference external" href="./pyplots/taqm_example3_TrustRaw.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="_images/taqm_example3_TrustRaw.png" src="_images/taqm_example3_TrustRaw.png" />
 </div>
@@ -375,7 +368,6 @@
 </pre></div>
 </div>
 <p>The plots of the cdfs for the four distributions are:</p>
-<p>(<a class="reference external" href="./pyplots/taqm_example3_TrustTAOH.py">Source code</a>, <a class="reference external" href="./pyplots/taqm_example3_TrustTAOH.png">png</a>, <a class="reference external" href="./pyplots/taqm_example3_TrustTAOH.hires.png">hires.png</a>, <a class="reference external" href="./pyplots/taqm_example3_TrustTAOH.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="_images/taqm_example3_TrustTAOH.png" src="_images/taqm_example3_TrustTAOH.png" />
 </div>
@@ -395,7 +387,7 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="mf">0.133379212736</span>
 </pre></div>
 </div>
-<p>In this particular case, we would thus achieve a more skilful forecast by reverting to the TAOH distribution and not the raw forecast.</p>
+<p>In this particular case, we would thus have achieved a more skilful forecast by reverting to the TAOH distribution and not the raw forecast.</p>
 </div>
 </div>
 </div>

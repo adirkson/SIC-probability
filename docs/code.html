@@ -398,11 +398,12 @@ where M is the number of ensemble members.</dd>
 <dl class="method">
 <dt id="taqm.taqm.trend_adjust_2p">
 <code class="descname">trend_adjust_2p</code><span class="sig-paren">(</span><em>data_all</em>, <em>tau_t</em>, <em>t</em>, <em>t_b=1999</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taqm.html#taqm.trend_adjust_2p"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taqm.taqm.trend_adjust_2p" title="Permalink to this definition">¶</a></dt>
-<dd><p>Linearly detrend data_all and re-center it about its
+<dd><p>Piece-wise linearly detrend data_all and re-center it about its
 non-linear least squares fit to Eq. <a class="reference internal" href="#equation-pw2">(2)</a> evaluated at 
 <span class="math">\(T=\)</span> <cite>t</cite>. This method carries
 out the trend-adjustment technique described in section 5a
-of Dirkson et al, 2018</p>
+of Dirkson et al, 2018. The non-linear least squares fit constrains
+Eq. <a class="reference internal" href="#equation-pw2">(2)</a> to be continuous at <span class="math">\(T=t_b\)</span>.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first last docutils">

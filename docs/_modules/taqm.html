@@ -241,11 +241,12 @@
         <span class="k">return</span> <span class="n">data_ta</span></div>
 
 <div class="viewcode-block" id="taqm.trend_adjust_2p"><a class="viewcode-back" href="../code.html#taqm.taqm.trend_adjust_2p">[docs]</a>    <span class="k">def</span> <span class="nf">trend_adjust_2p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data_all</span><span class="p">,</span><span class="n">tau_t</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">t_b</span><span class="o">=</span><span class="mi">1999</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Linearly detrend data_all and re-center it about its</span>
+        <span class="sd">&quot;&quot;&quot;Piece-wise linearly detrend data_all and re-center it about its</span>
 <span class="sd">        non-linear least squares fit to Eq. :eq:`pw2` evaluated at </span>
 <span class="sd">        :math:`T=` `t`. This method carries</span>
 <span class="sd">        out the trend-adjustment technique described in section 5a</span>
-<span class="sd">        of Dirkson et al, 2018</span>
+<span class="sd">        of Dirkson et al, 2018. The non-linear least squares fit constrains</span>
+<span class="sd">        Eq. :eq:`pw2` to be continuous at :math:`T=t_b`.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            data_all (ndarray):</span>

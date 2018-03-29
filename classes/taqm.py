@@ -199,11 +199,12 @@ class taqm():
         return data_ta
 
     def trend_adjust_2p(self,data_all,tau_t,t,t_b=1999):
-        """Linearly detrend data_all and re-center it about its
+        """Piece-wise linearly detrend data_all and re-center it about its
         non-linear least squares fit to Eq. :eq:`pw2` evaluated at 
         :math:`T=` `t`. This method carries
         out the trend-adjustment technique described in section 5a
-        of Dirkson et al, 2018
+        of Dirkson et al, 2018. The non-linear least squares fit constrains
+        Eq. :eq:`pw2` to be continuous at :math:`T=t_b`.
         
         Args:
             data_all (ndarray):

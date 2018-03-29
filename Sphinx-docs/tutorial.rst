@@ -73,10 +73,10 @@ Now, we'll generate some random variates from this distribution using the :py:me
    nsamples = 20
    X = rv.rvs(nsamples) # draw random sample
 
-   ax1.hist(X,normed=True,label='hist',histtype='stepfilled')
+   ax1.hist(X,normed=True,label='sample hist',histtype='stepfilled')
    ax1.legend(loc='upper right') #update legend
 
-   ax2.plot(x, beinf.ecdf(x, X), 'b',label='ecdf')
+   ax2.plot(x, beinf.ecdf(x, X), 'b',label='sample ecdf')
    ax2.legend(loc='lower right')
 
 .. plot:: pyplots/beinf_example2.py
@@ -127,7 +127,7 @@ Define the time variables relevant to calibration. The complete hindcast record 
 
    # Time
    tau_s = 1981    #start year
-   tau_f = 2012    #finish
+   tau_f = 2012    #finish year
    tau = np.arange(tau_s,tau_f+1)  #array of years in hindcast record
 
    t = 2011   #forecast year
@@ -146,7 +146,7 @@ Load the model historical (MH) ensmeble time series, observed historical (OH) ti
 
 
  
-Instantiate a taqm object, and perform the trend-adjustment on the MH and OH data using the :func:`~taqm.taqm.trend_adjust_2p` method in the :class:`taqm` class.
+Instantiate a :class:`taqm` object, and perform the trend-adjustment on the MH and OH data using the :func:`~taqm.taqm.trend_adjust_2p` method.
 
 .. code-block:: python
 
@@ -156,7 +156,7 @@ Instantiate a taqm object, and perform the trend-adjustment on the MH and OH dat
    pval_x = linregress(tau_t,X.mean(axis=1))[3]  #check the p-value for MH trend over tau_t                  
    if pval_x<0.05:
        # if significant, then adjust MH for the trend to create TAMH
-       X_ta = taqm.taqm.trend_adjust_2p(X,tau_t,t,t_b=1999)
+       X_ta = taqm.trend_adjust_2p(X,tau_t,t,t_b=1999)
    else:
        # else, set TAMH equal to MH (i.e. don't perform the trend adjustment) 
        X_ta = np.copy(X)
@@ -298,7 +298,7 @@ By executing the same code as above, when we calibrate the forecast ensemble usi
    >>> [ 0.0629     inf     inf     inf     inf     inf     inf     inf     inf
          inf]
 
-Using the :meth:`~beinf.beinf_gen.cdf_eval` (as in Example 1), the following TAMH, TAOH, raw forecast, and calibrated forecast cdfs can be seen to be:
+Using the :meth:`~beinf.beinf_gen.cdf_eval` (as in Example 1), the TAMH, TAOH, raw forecast, and calibrated forecast cdfs can be plotted:
 
 .. plot:: pyplots/taqm_example2.py
 
@@ -417,7 +417,7 @@ and CRPS values:
    print crps_x_t_cal
    >>> 0.133379212736
 
-In this particular case, we would thus achieve a more skilful forecast by reverting to the TAOH distribution and not the raw forecast.
+In this particular case, we would thus have achieved a more skilful forecast by reverting to the TAOH distribution and not the raw forecast.
 
 
 
