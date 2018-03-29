@@ -9,9 +9,13 @@ import numpy as np
 from taqm import taqm
 from scipy.stats import linregress
 from beinf import beinf
+import os
 
 # Change directory to where the data is stored and load data
-os.chdir('Data')
+# As written, this loads the data used to produce Example 1 in 
+# the tutorial. Simply change the filenames to load the data used
+# in Examples 2 and 3.
+os.chdir('Data') 
 X = np.load('MH.npy')   #load MH data
 Y = np.load('OH.npy')   #load OH data
 X_t = np.load('Raw_fcst.npy')   #load raw forecast
