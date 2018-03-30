@@ -19,10 +19,10 @@ class taqm():
     ``fit_data(X,Y,X_t)`` 
         BEINF parameters for the TAMH, TAOH, and the raw forecast
         
-    ``lin(m,b,T)`` 
+    ``lin(a1,b1,T)`` 
         linear equation values
     
-    ``piecewise_lin(m1,b1,m2,b2,t_b,T)`` 
+    ``piecewise_lin(a1,b1,a2,b2,t_b,T)`` 
         piece-wise linear equation values
 
     ``trend_adjust_1p(data_all,tau_t,t)``  
