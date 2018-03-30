@@ -78,7 +78,7 @@ Now, we'll generate some random variates from this distribution using the :py:me
 
 .. plot:: pyplots/beinf_example2.py
 
-Note that we have used the :meth:`~beinf.beinf_gen.ecdf` to compute the distribution function for the sample. We'll now fit this random sample to the BEINF distribution (using :meth:`~beinf.beinf_gen.fit`) and freeze a distribution object as :code:`rv_f`:
+Note that we have used the :meth:`~beinf.beinf_gen.ecdf` method to compute the distribution function for the sample. We'll now fit this random sample to the BEINF distribution (using :meth:`~beinf.beinf_gen.fit`) and freeze a distribution object as :code:`rv_f`:
 
 .. code-block:: python
 
