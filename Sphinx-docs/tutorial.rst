@@ -197,31 +197,14 @@ Now calibrate the forecast ensemble using the :func:`~taqm.taqm.calibrate` metho
 
 As described in the documentation for :func:`~taqm.taqm.calibrate`, the array :code:`X_t_cal_params` contains the four BEINF parameters fit to the calibrated forecast ensemble, and the :code:`X_t_cal` array contains the calibrated ensemble, where in this example each value set to :code:`np.inf` because the four BEINF distribution parameters are defined.
 
-Next, we're going to plot these distributions and calculate the continuous rank probability score (CRPS) for this single forecast.
+Next, we're going to compute the SIP quantity for the raw and calibrated forecast, plot all cumulative distributions, and calculate the continuous rank probability score (CRPS) for the raw and calibrated forecast.
 
-First, get the individual BEINF parameters from the arrays containing the parameters using :func:`~taqm.taqm.unpack_params`. It's useful to work with these variables instead of the arrays containing the parameters, as it keep things more readable.
-
-.. code-block:: python
-
-   a_x_ta, b_x_ta, p_x_ta, q_x_ta = taqm.unpack_params(X_ta_params)
-   a_y_ta, b_y_ta, p_y_ta, q_y_ta = taqm.unpack_params(Y_ta_params)
-   a_x_t, b_x_t, p_x_t, q_x_t = taqm.unpack_params(X_t_params)
-   a_x_t_cal, b_x_t_cal, p_x_t_cal, q_x_t_cal = taqm.unpack_params(X_t_cal_params)
-
-Second, freeze the four distribution objects
-
-.. code-block:: python
-
-   rv_x_ta = beinf(a_x_ta, b_x_ta, p_x_ta, q_x_ta) #TAMH                               
-   rv_y_ta = beinf(a_y_ta, b_y_ta, p_y_ta, q_y_ta) #TAOH
-   rv_x_t = beinf(a_x_t, b_x_t, p_x_t, q_x_t) #Raw forecast ensemble
-   rv_x_t_cal = beinf(a_x_t_cal, b_x_t_cal, p_x_t_cal, q_x_t_cal) #Calibrated forecast ensemble
-
-Finally, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cdf_eval` method in the :class:`beinf` class. This method handles instances when :math:`a` and :math:`b` aren't known (and given the value :code:`np.inf`), in which case the cdf over (0,1) is computed using the :meth:`~beinf.beinf_gen.ecdf` method. When :math:`a` and :math:`b` are known (as is the case in this example), :meth:`~beinf.beinf_gen.cdf_eval` evaluates the cdf using the :py:meth:`~scipy.stats.rv_continuous.cdf` method.
+First, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cdf_eval` method in the :class:`beinf` class. This method handles instances when :math:`a` and :math:`b` aren't known (and given the value :code:`np.inf`), in which case the cdf over (0,1) is computed using the :meth:`~beinf.beinf_gen.ecdf` method. When :math:`a` and :math:`b` are known (as is the case in this example), :meth:`~beinf.beinf_gen.cdf_eval` evaluates the cdf using the :py:meth:`~scipy.stats.rv_continuous.cdf` method. We can also use the :meth:`~beinf.beinf_gen.cdf_eval` method to compute SIP.
 
 .. code-block:: python
   
    x = np.linspace(0, 1, 1000)
+   x_l = 0.15
 
    # Evaluate cdf for the TAMH distribution at x
    cdf_x_ta = beinf.cdf_eval(x,X_ta_params,X_ta)
@@ -229,21 +212,27 @@ Finally, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cd
    # Evaluate cdf for the TAOH distribution at x
    cdf_y_ta = beinf.cdf_eval(x,Y_ta_params,Y_ta)
 
-   # Evaluate cdf for the forecast distribution at x 
+   # Evaluate cdf for the forecast distribution at x and calculate SIP
    cdf_x_t = beinf.cdf_eval(x,X_t_params,X_t)
+   sip_x_t = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
 
 To evaluate the cdf for the calibrated forecast ensemble, it's slightly more complicated. This is because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (as described above). These complications can be accounted for though simply using this :code:`if-else` statement.
 
 .. code-block:: python
+ 
+   p_x_t = X_t_params[2] #we'll need this parameter for the forecast distribution
 
-   # Evaluate cdf for the calibrated forecast distribution at x
+   # Evaluate cdf for the calibrated forecast distribution at x and calculate SIP
    if trust_sharp_fcst==True and p_x_t==1:
        cdf_x_t_cal = beinf.cdf_eval(x,X_t_params,X_t) # go with the original forecast data/distribution
+       sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
    else:
        if p_x_t==1.0:
            cdf_x_t_cal = beinf.cdf_eval(x,Y_ta_params,Y_ta)   # go with the TAOH data/distribution
+	   sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,Y_ta_params,Y_ta)
        else:
            cdf_x_t_cal = beinf.cdf_eval(x,X_t_cal_params,X_t_cal)   # go with the calibrated forecast data/distribution
+           sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_cal_params,X_t_cal)
         
 Here are the cdfs for each of these distributions
 
@@ -266,7 +255,6 @@ This is how we can calculate the CRPS for this forecast based on the observed va
    crps_x_t_cal = np.trapz((cdf_x_t_cal - cdf_obs)**2.,x)
    print crps_x_t_cal
    >>> 0.0880923964244
-
 
 
 ^^^^^^^^^^

@@ -30,7 +30,7 @@ import sys
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 sys.path.insert(0, os.path.abspath('.'))
-sys.path.append('/home/arlan/Dropbox/PhD_Work/Hindcasts_Probabilistic/Code/ProbabilisticCodeFinal/SIC-probability/classes')
+sys.path.append('/home/arlan/Dropbox/PhD_Work/Hindcasts_Probabilistic/Code/ProbabilisticCodeFinal/SIC-probability/code')
 
 extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.doctest',
