@@ -67,10 +67,10 @@
 <span class="sd">    ``fit_data(X,Y,X_t)`` </span>
 <span class="sd">        BEINF parameters for the TAMH, TAOH, and the raw forecast</span>
 <span class="sd">        </span>
-<span class="sd">    ``lin(m,b,T)`` </span>
+<span class="sd">    ``lin(a1,b1,T)`` </span>
 <span class="sd">        linear equation values</span>
 <span class="sd">    </span>
-<span class="sd">    ``piecewise_lin(m1,b1,m2,b2,t_b,T)`` </span>
+<span class="sd">    ``piecewise_lin(a1,b1,a2,b2,t_b,T)`` </span>
 <span class="sd">        piece-wise linear equation values</span>
 
 <span class="sd">    ``trend_adjust_1p(data_all,tau_t,t)``  </span>
@@ -79,6 +79,9 @@
 <span class="sd">    ``trend_adjust_2p(data_all,tau_t,t,t_b=1999)``  </span>
 <span class="sd">        trend-adjusted values using two periods</span>
 <span class="sd">    </span>
+<span class="sd">    ``unpack_params(array)``</span>
+<span class="sd">        the individual parameters stored in array</span>
+<span class="sd">        </span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="taqm.lin"><a class="viewcode-back" href="../code.html#taqm.taqm.lin">[docs]</a>    <span class="k">def</span> <span class="nf">lin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">a1</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
@@ -472,7 +475,22 @@
 
         <span class="n">x_t_cal_params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a_x_t_cal</span><span class="p">,</span> <span class="n">b_x_t_cal</span><span class="p">,</span> <span class="n">p_x_t_cal</span><span class="p">,</span> <span class="n">q_x_t_cal</span><span class="p">])</span>
         <span class="c1">#Return BEINF distribution parameters  </span>
-        <span class="k">return</span> <span class="n">x_t_cal_params</span><span class="p">,</span> <span class="n">X_t_cal_beta</span></div></div>
+        <span class="k">return</span> <span class="n">x_t_cal_params</span><span class="p">,</span> <span class="n">X_t_cal_beta</span></div>
+
+<div class="viewcode-block" id="taqm.unpack_params"><a class="viewcode-back" href="../code.html#taqm.taqm.unpack_params">[docs]</a>    <span class="k">def</span> <span class="nf">unpack_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">array</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unpacks the individual parameters a, b, p, q from array.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            array (ndarray):</span>
+<span class="sd">                Array containing the four parameters a,b,p,q for</span>
+<span class="sd">                a BEINF distribution.</span>
+<span class="sd">                </span>
+<span class="sd">        Returns: a,b,p,q (floats):</span>
+<span class="sd">            The individual parameters for the BEINF disribution.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">q</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">q</span></div></div>
 </pre></div>
 
           </div>

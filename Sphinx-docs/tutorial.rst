@@ -199,14 +199,14 @@ As described in the documentation for :func:`~taqm.taqm.calibrate`, the array :c
 
 Next, we're going to plot these distributions and calculate the continuous rank probability score (CRPS) for this single forecast.
 
-First, get the individual BEINF parameters from the arrays containing the parameters. It's useful to work with these variables instead of the arrays containing the parameters, as it keep things more readable.
+First, get the individual BEINF parameters from the arrays containing the parameters using :func:`~taqm.taqm.unpack_params`. It's useful to work with these variables instead of the arrays containing the parameters, as it keep things more readable.
 
 .. code-block:: python
 
-   a_x_ta, b_x_ta, p_x_ta, q_x_ta = X_ta_params[0], X_ta_params[1], X_ta_params[2], X_ta_params[3]
-   a_y_ta, b_y_ta, p_y_ta, q_y_ta = Y_ta_params[0], Y_ta_params[1], Y_ta_params[2], Y_ta_params[3]
-   a_x_t, b_x_t, p_x_t, q_x_t = X_t_params[0], X_t_params[1], X_t_params[2], X_t_params[3]
-   a_x_t_cal, b_x_t_cal, p_x_t_cal, q_x_t_cal = X_t_cal_params[0], X_t_cal_params[1], X_t_cal_params[2], X_t_cal_params[3]
+   a_x_ta, b_x_ta, p_x_ta, q_x_ta = taqm.unpack_params(X_ta_params)
+   a_y_ta, b_y_ta, p_y_ta, q_y_ta = taqm.unpack_params(Y_ta_params)
+   a_x_t, b_x_t, p_x_t, q_x_t = taqm.unpack_params(X_t_params)
+   a_x_t_cal, b_x_t_cal, p_x_t_cal, q_x_t_cal = taqm.unpack_params(X_t_cal_params)
 
 Second, freeze the four distribution objects
 

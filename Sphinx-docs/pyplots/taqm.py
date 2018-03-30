@@ -424,3 +424,7 @@ class taqm():
         x_t_cal_params = np.array([a_x_t_cal, b_x_t_cal, p_x_t_cal, q_x_t_cal])
         #Return BEINF distribution parameters  
         return x_t_cal_params, X_t_cal_beta
+
+    def unpack_params(self,array):
+        a,b,p,q = map(lambda i: array[i], range(len(array)))
+        return a,b,p,q

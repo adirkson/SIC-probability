@@ -245,14 +245,16 @@ It relies on the methods from the <a class="reference internal" href="#module-be
 <dd>calibrated forecast BEINF parameters and calibrated forecast ensemble</dd>
 <dt><code class="docutils literal"><span class="pre">fit_data(X,Y,X_t)</span></code> </dt>
 <dd>BEINF parameters for the TAMH, TAOH, and the raw forecast</dd>
-<dt><code class="docutils literal"><span class="pre">lin(m,b,T)</span></code> </dt>
+<dt><code class="docutils literal"><span class="pre">lin(a1,b1,T)</span></code> </dt>
 <dd>linear equation values</dd>
-<dt><code class="docutils literal"><span class="pre">piecewise_lin(m1,b1,m2,b2,t_b,T)</span></code> </dt>
+<dt><code class="docutils literal"><span class="pre">piecewise_lin(a1,b1,a2,b2,t_b,T)</span></code> </dt>
 <dd>piece-wise linear equation values</dd>
 <dt><code class="docutils literal"><span class="pre">trend_adjust_1p(data_all,tau_t,t)</span></code>  </dt>
 <dd>trend-adjusted values using a single period</dd>
 <dt><code class="docutils literal"><span class="pre">trend_adjust_2p(data_all,tau_t,t,t_b=1999)</span></code>  </dt>
 <dd>trend-adjusted values using two periods</dd>
+<dt><code class="docutils literal"><span class="pre">unpack_params(array)</span></code></dt>
+<dd>the individual parameters stored in array</dd>
 </dl>
 <dl class="method">
 <dt id="taqm.taqm.calibrate">
@@ -428,6 +430,23 @@ where M is the number of ensemble members.</dd>
 </dd>
 <dt>Returns: data_ta (ndarray):</dt>
 <dd>Trend-adjusted values with same shape as data_all.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taqm.taqm.unpack_params">
+<code class="descname">unpack_params</code><span class="sig-paren">(</span><em>array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taqm.html#taqm.unpack_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taqm.taqm.unpack_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpacks the individual parameters a, b, p, q from array.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>array (ndarray):</dt>
+<dd>Array containing the four parameters a,b,p,q for
+a BEINF distribution.</dd>
+</dl>
+</dd>
+<dt>Returns: a,b,p,q (floats):</dt>
+<dd>The individual parameters for the BEINF disribution.</dd>
 </dl>
 </dd></dl>
 

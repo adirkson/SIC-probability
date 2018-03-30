@@ -31,6 +31,9 @@ class taqm():
     ``trend_adjust_2p(data_all,tau_t,t,t_b=1999)``  
         trend-adjusted values using two periods
     
+    ``unpack_params(array)``
+        the individual parameters stored in array
+        
     '''
 
     def lin(self,a1,b1,T):
@@ -425,3 +428,18 @@ class taqm():
         x_t_cal_params = np.array([a_x_t_cal, b_x_t_cal, p_x_t_cal, q_x_t_cal])
         #Return BEINF distribution parameters  
         return x_t_cal_params, X_t_cal_beta
+
+    def unpack_params(self,array):
+        '''
+        Unpacks the individual parameters a, b, p, q from array.
+        
+        Args:
+            array (ndarray):
+                Array containing the four parameters a,b,p,q for
+                a BEINF distribution.
+                
+        Returns: a,b,p,q (floats):
+            The individual parameters for the BEINF disribution.
+        '''
+        a,b,p,q = map(lambda i: array[i], range(len(array)))
+        return a,b,p,q
