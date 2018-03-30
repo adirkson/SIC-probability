@@ -238,12 +238,12 @@ To evaluate the cdf for the calibrated forecast ensemble, it's slightly more com
 
    # Evaluate cdf for the calibrated forecast distribution at x
    if trust_sharp_fcst==True and p_x_t==1:
-       cdf_x_t_cal = beinf.cdf_eval(x,X_t_params,X_t)
+       cdf_x_t_cal = beinf.cdf_eval(x,X_t_params,X_t) # go with the original forecast data/distribution
    else:
        if p_x_t==1.0:
-           cdf_x_t_cal = beinf.cdf_eval(x,Y_ta_params,Y_ta)
+           cdf_x_t_cal = beinf.cdf_eval(x,Y_ta_params,Y_ta)   # go with the TAOH data/distribution
        else:
-           cdf_x_t_cal = beinf.cdf_eval(x,X_t_cal_params,X_t_cal)
+           cdf_x_t_cal = beinf.cdf_eval(x,X_t_cal_params,X_t_cal)   # go with the calibrated forecast data/distribution
         
 Here are the cdfs for each of these distributions
 
