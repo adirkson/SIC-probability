@@ -60,19 +60,8 @@ X_t_cal_params, X_t_cal = taqm.calibrate(X_ta_params, Y_ta_params, X_t_params,
 print np.around(X_t_cal_params,4)
 print np.around(X_t_cal,4)
 
-# Get the individual parameters from the array containing the parameters
-a_x_ta, b_x_ta, p_x_ta, q_x_ta = taqm.unpack_params(X_ta_params)
-a_y_ta, b_y_ta, p_y_ta, q_y_ta = taqm.unpack_params(Y_ta_params)
-a_x_t, b_x_t, p_x_t, q_x_t = taqm.unpack_params(X_t_params)
-a_x_t_cal, b_x_t_cal, p_x_t_cal, q_x_t_cal = taqm.unpack_params(X_t_cal_params)
-
-# freeze distribution objects
-rv_x_ta = beinf(a_x_ta, b_x_ta, p_x_ta, q_x_ta) #TAMH                               
-rv_y_ta = beinf(a_y_ta, b_y_ta, p_y_ta, q_y_ta) #TAOH
-rv_x_t = beinf(a_x_t, b_x_t, p_x_t, q_x_t) #Raw forecast ensemble
-rv_x_t_cal = beinf(a_x_t_cal, b_x_t_cal, p_x_t_cal, q_x_t_cal) #Calibrated forecast ensemble
-    
 x = np.linspace(0, 1, 1000)
+x_l = 0.15
 
 # Evaluate cdf for the TAMH distribution at x
 cdf_x_ta = beinf.cdf_eval(x,X_ta_params,X_ta)
@@ -82,15 +71,20 @@ cdf_y_ta = beinf.cdf_eval(x,Y_ta_params,Y_ta)
 
 # Evaluate cdf for the forecast distribution at x 
 cdf_x_t = beinf.cdf_eval(x,X_t_params,X_t)
+sip_x_t = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
 
 # Evaluate cdf for the calibrated forecast distribution at x
+p_x_t = X_t_params[2]
 if trust_sharp_fcst==True and p_x_t==1:
     cdf_x_t_cal = beinf.cdf_eval(x,X_t_params,X_t)
+    sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
 else:
     if p_x_t==1.0:
         cdf_x_t_cal = beinf.cdf_eval(x,Y_ta_params,Y_ta)
+        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,Y_ta_params,Y_ta)
     else:
         cdf_x_t_cal = beinf.cdf_eval(x,X_t_cal_params,X_t_cal)
+        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_cal_params,X_t_cal_params)
         
         
 fig = plt.figure()            
