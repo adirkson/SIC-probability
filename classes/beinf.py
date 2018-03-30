@@ -264,7 +264,7 @@ class beinf_gen(rv_continuous):
                 The value(s) at which the ecdf is evaluated
                
             X_samp (float or ndarray):
-                A sample that lies on the either: the open
+                A sample that lies on either: the open
                 interval (0,1) when p and q **are** included as
                 arguments, `or` the closed interval
                 [0,1] when p and q **are not** included as arguments. 
@@ -285,12 +285,12 @@ class beinf_gen(rv_continuous):
             x = np.array([x])
 
         if isinstance(X_samp,np.float):
-            #if X_beta comes in as float, turn it into a numpy array
+            #if X_samp comes in as float, turn it into a numpy array
             X_samp = np.array([X_samp])  
     
        
         if p!=None and q!=None:
-            # sort the values of X_beta from smallest to largest
+            # sort the values of X_samp from smallest to largest
             # but take out 0's and 1's because p and q take care of endpoints
             xs = np.sort(X_samp[np.logical_and(X_samp!=0.0,X_samp!=1.0)])
             # also take out any inf values 
@@ -311,7 +311,7 @@ class beinf_gen(rv_continuous):
                           p*(1-q) + (1-p)*np.array(ys)/float(len(xs)),
                           1.0]
         else:
-            # sort the values of X_beta from smallest to largest
+            # sort the values of X_samp from smallest to largest
             xs = np.sort(X_samp)
             
             # get the sample size of xs satisfying xs<=x for each x
