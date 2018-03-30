@@ -207,14 +207,14 @@ First, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cdf_
    x_l = 0.15
 
    # Evaluate cdf for the TAMH distribution at x
-   cdf_x_ta = beinf.cdf_eval(x,X_ta_params,X_ta)
+   cdf_x_ta = beinf.cdf_eval(x, X_ta_params, X_ta)
 
    # Evaluate cdf for the TAOH distribution at x
-   cdf_y_ta = beinf.cdf_eval(x,Y_ta_params,Y_ta)
+   cdf_y_ta = beinf.cdf_eval(x, Y_ta_params, Y_ta)
 
    # Evaluate cdf for the forecast distribution at x and calculate SIP
-   cdf_x_t = beinf.cdf_eval(x,X_t_params,X_t)
-   sip_x_t = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
+   cdf_x_t = beinf.cdf_eval(x, X_t_params, X_t)
+   sip_x_t = 1.0 - beinf.cdf_eval(x_l, X_t_params, X_t)
 
 To evaluate the cdf for the calibrated forecast ensemble, it's slightly more complicated. This is because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (as described above). These complications can be accounted for though simply using this :code:`if-else` statement.
 
@@ -224,15 +224,15 @@ To evaluate the cdf for the calibrated forecast ensemble, it's slightly more com
 
    # Evaluate cdf for the calibrated forecast distribution at x and calculate SIP
    if trust_sharp_fcst==True and p_x_t==1:
-       cdf_x_t_cal = beinf.cdf_eval(x,X_t_params,X_t) # go with the original forecast data/distribution
-       sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
+       cdf_x_t_cal = beinf.cdf_eval(x, X_t_params, X_t) # go with the original forecast data/distribution
+       sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, X_t_params, X_t)
    else:
        if p_x_t==1.0:
-           cdf_x_t_cal = beinf.cdf_eval(x,Y_ta_params,Y_ta)   # go with the TAOH data/distribution
-	   sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,Y_ta_params,Y_ta)
+           cdf_x_t_cal = beinf.cdf_eval(x, Y_ta_params, Y_ta)   # go with the TAOH data/distribution
+	   sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, Y_ta_params, Y_ta)
        else:
-           cdf_x_t_cal = beinf.cdf_eval(x,X_t_cal_params,X_t_cal)   # go with the calibrated forecast data/distribution
-           sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_cal_params,X_t_cal)
+           cdf_x_t_cal = beinf.cdf_eval(x, X_t_cal_params, X_t_cal)   # go with the calibrated forecast data/distribution
+           sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, X_t_cal_params, X_t_cal)
         
 Here are the cdfs for each of these distributions
 
