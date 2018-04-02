@@ -214,7 +214,7 @@ First, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cdf_
    cdf_x_t = beinf.cdf_eval(x, X_t_params, X_t)
    sip_x_t = 1.0 - beinf.cdf_eval(x_l, X_t_params, X_t)
 
-Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (when :math:`p_{x_t}=1). These complications can be accounted for though simply using this :code:`if-else` statement.
+Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (when :math:`p_{x_t}=1`). These complications can be accounted for though simply using this :code:`if-else` statement.
 
 .. code-block:: python
  

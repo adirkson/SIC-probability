@@ -231,7 +231,7 @@
 <span class="n">sip_x_t</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">beinf</span><span class="o">.</span><span class="n">cdf_eval</span><span class="p">(</span><span class="n">x_l</span><span class="p">,</span> <span class="n">X_t_params</span><span class="p">,</span> <span class="n">X_t</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was “trusted” or the TAOH was “trusted” (when <span class="math">\(p_{x_t}=1). These complications can be accounted for though simply using this :code:`if-else\)</span> statement.</p>
+<p>Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was “trusted” or the TAOH was “trusted” (when <span class="math">\(p_{x_t}=1\)</span>). These complications can be accounted for though simply using this <code class="code docutils literal"><span class="pre">if-else</span></code> statement.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">p_x_t</span> <span class="o">=</span> <span class="n">X_t_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">#we&#39;ll need this parameter for the forecast distribution</span>
 
 <span class="c1"># Evaluate cdf for the calibrated forecast distribution at x and calculate SIP</span>
