@@ -6,7 +6,7 @@ Zero- and One- Inflated Beta Distribution
 
 Here, we'll go through some of the ways the :class:`beinf` class can be utilized. The :class:`beinf` class is an instance of a subclass of :py:class:`~scipy.stats.rv_continuous`, and therefore inherits all of the methods from :py:class:`~scipy.stats.rv_continuous`. In addition, some methods have been added that aren't included in :py:class:`~scipy.stats.rv_continuous` that are useful for applying the BEINF distribution to the sea ice concentration (SIC) variable (see the documentation for the :class:`beinf` class).
 
-First, define some arbitrary BEINF distribution parameters and freeze the distribution object
+First, define some arbitrary BEINF distribution parameters and freeze the distribution object:
 
 .. code-block:: python
 
@@ -17,7 +17,7 @@ First, define some arbitrary BEINF distribution parameters and freeze the distri
    a, b, p, q = 2.3, 6.7, 0.4, 0.0
    rv = beinf(a, b, p, q)
 
-This :code:`rv` object can now be used to call on any of the methods in :py:class:`~scipy.stats.rv_continuous`. For example, we can compute its first few moments
+This :code:`rv` object can now be used to call on any of the methods in :py:class:`~scipy.stats.rv_continuous`. For example, we can compute its first few moments:
 
 .. code-block:: python
 
@@ -30,7 +30,7 @@ We can compute the sea ice probability (SIP) quantity (i.e. the probability that
    x_l = 0.15
    sip = 1.0 - rv.cdf(x_l)
 
-Alternatively, we can plot its pdf and cdf over the interval [0,1] using the :py:meth:`~scipy.stats.rv_continuous.pdf` and :py:meth:`~scipy.stats.rv_continuous.cdf` methods:
+Additionally, we can plot its pdf and cdf over the interval [0,1] using the :py:meth:`~scipy.stats.rv_continuous.pdf` and :py:meth:`~scipy.stats.rv_continuous.cdf` methods:
 
 .. code-block:: python
    
@@ -63,7 +63,7 @@ Alternatively, we can plot its pdf and cdf over the interval [0,1] using the :py
 
 .. plot:: pyplots/beinf_example1.py
 
-Now, we'll generate some random variates from this distribution using the :py:meth:`~scipy.stats.rv_continuous.rvs`) method, and plot its histogram and empirical cumulative distribution function (utilizing the added :meth:`~beinf.beinf_gen.ecdf` method) along with the original distribution:
+Now, we'll generate some random variates from this distribution using the :py:meth:`~scipy.stats.rv_continuous.rvs` method, and plot its histogram and empirical cumulative distribution function (utilizing the added :meth:`~beinf.beinf_gen.ecdf` method) along with the original distribution:
 
 .. code-block:: python
 
@@ -85,7 +85,7 @@ Note that we have used the :meth:`~beinf.beinf_gen.ecdf` method to compute the d
    a_f, b_f, p_f, q_f = beinf.fit(X)
    rv_f = beinf(a_f, b_f, p_f, q_f)
 
-Finally, we'll plot its pdf and cdf along with the original distribution and random sample.
+Finally, we'll plot its pdf and cdf along with the original distribution and random sample:
 
 .. code-block:: python
 
@@ -111,7 +111,7 @@ In Example 1, we'll show how TAQM works for a grid cell for which the trend-adju
 Example 1 
 ^^^^^^^^^^
 
-Define the time variables relevant to calibration. The complete hindcast record is from 1981-2012 and the forecast year is 2011. The range of years :math:`\tau_t` thus covers 1981-2012 excluding 2011.
+Define the time variables relevant to calibration. The complete hindcast record is from 1981-2012 and the forecast year is 2011. The range of years :math:`\tau_t` thus covers 1981-2012 excluding 2011:
 
 .. code-block:: python
 
@@ -131,7 +131,7 @@ Define the time variables relevant to calibration. The complete hindcast record 
    tau_t = tau[tau!=t]   # remove the forecast year from tau and call it tau_t
 
 
-Load the model historical (MH) ensemble time series, observed historical (OH) time series, and the forecast ensemble. MH and OH do not contain the data for year :math:`t`.
+Load the model historical (MH) ensemble time series, observed historical (OH) time series, and the forecast ensemble.
 
 .. code-block:: python
 
@@ -141,9 +141,7 @@ Load the model historical (MH) ensemble time series, observed historical (OH) ti
    X_t = np.load('Raw_fcst.npy')   #load raw forecast
    Y_t = 0.2 #made-up observation
 
-
- 
-Instantiate a :class:`taqm` object, and perform the trend-adjustment on the MH and OH data using the :func:`~taqm.taqm.trend_adjust_2p` method.
+The MH and OH data are already absent for the forecast year :math:`t` in these arrays. Now, we'll instantiate a :class:`taqm` object, and perform the trend-adjustment on the MH and OH data using the :func:`~taqm.taqm.trend_adjust_2p` method:
 
 .. code-block:: python
 
@@ -167,11 +165,11 @@ Instantiate a :class:`taqm` object, and perform the trend-adjustment on the MH a
        # else, set TAOH equal to OH (i.e. don't perform the trend adjustment) 
        Y_ta = np.copy(Y)
 
-The following is a plot of the :code:`X` and :code:`Y` (top panel) , and :code:`X_ta` and :code:`Y_ta` (bottom panel), with the ensemble range for :code:`X` and :code:`X_ta` encapsulated in the shaded area.
+The following is a plot of :code:`X` and :code:`Y` (top panel), and :code:`X_ta` and :code:`Y_ta` (bottom panel), with the ensemble range for :code:`X` and :code:`X_ta` encapsulated in the shaded area.
  
 .. plot:: pyplots/taqm_example1_trendadjust.py
 
-Fit the TAMH, TAOH, and forecast ensemble to the BEINF distribution using the :func:`~taqm.taqm.fit_params` method in the :class:`taqm` class.
+Next, we'll fit the TAMH, TAOH, and forecast ensemble to the BEINF distribution using the :func:`~taqm.taqm.fit_params` method in the :class:`taqm` class:
 
 .. code-block:: python
    
@@ -195,7 +193,7 @@ Now calibrate the forecast ensemble using the :func:`~taqm.taqm.calibrate` metho
    print np.around(X_t_cal,4)
    >>> [ inf  inf  inf  inf  inf  inf  inf  inf  inf  inf]
 
-As described in the documentation for :func:`~taqm.taqm.calibrate`, the array :code:`X_t_cal_params` contains the four BEINF parameters fit to the calibrated forecast ensemble, and the :code:`X_t_cal` array contains the calibrated ensemble, where in this example each value set to :code:`np.inf` because the four BEINF distribution parameters are defined.
+As described in the documentation for :func:`~taqm.taqm.calibrate`, the array :code:`X_t_cal_params` contains the four BEINF parameters fit to the calibrated forecast ensemble, and the :code:`X_t_cal` array contains the calibrated ensemble, where in this example each value has been set to :code:`np.inf` because the four BEINF distribution parameters are defined.
 
 Next, we're going to compute the SIP quantity for the raw and calibrated forecast, plot all cumulative distributions, and calculate the continuous rank probability score (CRPS) for the raw and calibrated forecast.
 
@@ -216,7 +214,7 @@ First, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cdf_
    cdf_x_t = beinf.cdf_eval(x, X_t_params, X_t)
    sip_x_t = 1.0 - beinf.cdf_eval(x_l, X_t_params, X_t)
 
-To evaluate the cdf for the calibrated forecast ensemble, it's slightly more complicated. This is because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (as described above). These complications can be accounted for though simply using this :code:`if-else` statement.
+Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (when :math:`p_{x_t}=1). These complications can be accounted for though simply using this :code:`if-else` statement.
 
 .. code-block:: python
  
@@ -224,17 +222,20 @@ To evaluate the cdf for the calibrated forecast ensemble, it's slightly more com
 
    # Evaluate cdf for the calibrated forecast distribution at x and calculate SIP
    if trust_sharp_fcst==True and p_x_t==1:
-       cdf_x_t_cal = beinf.cdf_eval(x, X_t_params, X_t) # go with the original forecast data/distribution
+       # go with the original forecast data/distribution
+       cdf_x_t_cal = beinf.cdf_eval(x, X_t_params, X_t) 
        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, X_t_params, X_t)
    else:
        if p_x_t==1.0:
-           cdf_x_t_cal = beinf.cdf_eval(x, Y_ta_params, Y_ta)   # go with the TAOH data/distribution
+           # go with the TAOH data/distribution
+           cdf_x_t_cal = beinf.cdf_eval(x, Y_ta_params, Y_ta)  
 	   sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, Y_ta_params, Y_ta)
        else:
-           cdf_x_t_cal = beinf.cdf_eval(x, X_t_cal_params, X_t_cal)   # go with the calibrated forecast data/distribution
+           # go with the calibrated forecast data/distribution
+           cdf_x_t_cal = beinf.cdf_eval(x, X_t_cal_params, X_t_cal)   
            sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, X_t_cal_params, X_t_cal)
         
-Here are the cdfs for each of these distributions
+Here are the cdfs for each of these distributions:
 
 .. plot:: pyplots/taqm_example1_cdfs.py
 
@@ -260,7 +261,7 @@ This is how we can calculate the CRPS for this forecast based on the observed va
 ^^^^^^^^^^
 Example 2 
 ^^^^^^^^^^
-For a situation when one of cases 2-4 are encountered (for any of the TAMH, TAOH, or raw forecast), we'll actually use the exact same code used in Example 1. Of course different data are loaded. In this case, the forecast distribution satisfies case 2 (all but one ensemble member are 0's and 1's)
+For a situation when one of cases 2-4 are encountered (for any of the TAMH, TAOH, or raw forecast), we'll actually use the exact same code used in Example 1. Of course different data are loaded. In this case, the forecast distribution satisfies case 2 (all but one ensemble member are 0 or 1).
 
 .. code-block:: python
 
@@ -271,7 +272,7 @@ For a situation when one of cases 2-4 are encountered (for any of the TAMH, TAOH
    X_t = np.load('Raw_fcst_case2.npy') #load raw forecast
    Y_t = 0.5   #made-up observation
 
-By executing the same code as above, when we calibrate the forecast ensemble using the :func:`~taqm.taqm.calibrate` method, we get:
+By executing the same code used in Example 1, when we calibrate the forecast ensemble using the :func:`~taqm.taqm.calibrate` method, we get:
 
 .. code-block:: python
 
@@ -313,7 +314,7 @@ Example 3
 ^^^^^^^^^^
 For a situation when case 1 is encountered for one of TAMH, TAOH, or the raw forecast, we'll still execute the same code used in Example 1.
 
-First we'll load the data:
+First however, we'll load different data:
 
 .. code-block:: python
 
@@ -324,13 +325,13 @@ First we'll load the data:
    X_t = np.load('Raw_fcst_case3.npy') #load raw forecast
    Y_t = 0.15  #made-up observation
 
-For these particular data, both the MH and raw forecast data have :math:`p=1`. Because :math:`p_{x_t}=1` for this example, we have the choice of trusting the raw forecast or reverting to the TAOH distribution. To show how these choices differ, we'll first set
+For these particular data, both the MH and raw forecast data have :math:`p=1`. Because :math:`p_{x_t}=1` for this example, we have the choice of trusting the raw forecast or reverting to the TAOH distribution. To show how these choices differ, we'll first set:
 
 .. code-block:: python
 
    trust_raw_fcst = True
 
-The calibrated forecast parameters and values are
+The calibrated forecast parameters and values are:
 
 .. code-block:: python
 
@@ -345,7 +346,7 @@ The cdfs for the TAMH, TAOH, raw forecast, and calibrated forecast computed usin
 
 .. plot:: pyplots/taqm_example3_TrustRaw.py
 
-Because we have set :code:`trust_raw_fcst = True`, the cdfs in the right-hand panel are identical. The CRPS values for the raw and calibrated forecast are computed as in Examples 1 and 2, and are also equivalent:
+Because we have set :code:`trust_raw_fcst = True`, the cdfs in the right-hand panel are identical. The CRPS values for the raw and calibrated forecast are computed as in Examples 1 and 2, and are also the same:
 
 .. code-block:: python
  
@@ -363,7 +364,7 @@ Because we have set :code:`trust_raw_fcst = True`, the cdfs in the right-hand pa
    print crps_x_t_cal
    >>> 0.14964964965
 
-Alternatively, we could revert to the TAOH distribution by setting 
+Alternatively, we could revert to the TAOH distribution by setting:
 
 .. code-block:: python
 
@@ -402,7 +403,7 @@ and CRPS values:
    print crps_x_t_cal
    >>> 0.133379212736
 
-In this particular case, we would thus have achieved a more skillful forecast by reverting to the TAOH distribution and not the raw forecast.
+In this particular case, we would have achieved a more skillful forecast by reverting to the TAOH distribution, and not the raw forecast.
 
 
 
