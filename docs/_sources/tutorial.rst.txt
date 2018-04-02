@@ -136,9 +136,9 @@ Load the model historical (MH) ensemble time series, observed historical (OH) ti
 .. code-block:: python
 
    os.chdir('Data')
-   X = np.load('MH.npy')   #load MH data
-   Y = np.load('OH.npy')   #load OH data
-   X_t = np.load('Raw_fcst.npy')   #load raw forecast
+   X = np.load('MH_ex1.npy')   #load MH data
+   Y = np.load('OH_ex1.npy')   #load OH data
+   X_t = np.load('Raw_fcst_ex1.npy')   #load raw forecast
    Y_t = 0.2 #made-up observation
 
 The MH and OH data are already absent for the forecast year :math:`t` in these arrays. Now, we'll instantiate a :class:`taqm` object, and perform the trend-adjustment on the MH and OH data using the :func:`~taqm.taqm.trend_adjust_2p` method:
@@ -267,9 +267,9 @@ For a situation when one of cases 2-4 are encountered (for any of the TAMH, TAOH
 
    # Change directory to where the data is stored and load data
    os.chdir('Data')
-   X = np.load('MH_case2.npy') #load MH data
-   Y = np.load('OH_case2.npy') #load OH data
-   X_t = np.load('Raw_fcst_case2.npy') #load raw forecast
+   X = np.load('MH_ex2.npy') #load MH data
+   Y = np.load('OH_ex2.npy') #load OH data
+   X_t = np.load('Raw_fcst_ex2.npy') #load raw forecast
    Y_t = 0.5   #made-up observation
 
 By executing the same code used in Example 1, when we calibrate the forecast ensemble using the :func:`~taqm.taqm.calibrate` method, we get:
@@ -320,9 +320,9 @@ First however, we'll load different data:
 
    # Change directory to where the data is stored and load data
    os.chdir('Data')
-   X = np.load('MH_case3.npy') #load MH data
-   Y = np.load('OH_case3.npy') #load OH data
-   X_t = np.load('Raw_fcst_case3.npy') #load raw forecast
+   X = np.load('MH_ex3.npy') #load MH data
+   Y = np.load('OH_ex3.npy') #load OH data
+   X_t = np.load('Raw_fcst_ex3.npy') #load raw forecast
    Y_t = 0.15  #made-up observation
 
 For these particular data, both the MH and raw forecast data have :math:`p=1`. Because :math:`p_{x_t}=1` for this example, we have the choice of trusting the raw forecast or reverting to the TAOH distribution. To show how these choices differ, we'll first set:

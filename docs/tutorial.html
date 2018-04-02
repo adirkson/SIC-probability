@@ -164,9 +164,9 @@
 </div>
 <p>Load the model historical (MH) ensemble time series, observed historical (OH) time series, and the forecast ensemble.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;MH.npy&#39;</span><span class="p">)</span>   <span class="c1">#load MH data</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;OH.npy&#39;</span><span class="p">)</span>   <span class="c1">#load OH data</span>
-<span class="n">X_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;Raw_fcst.npy&#39;</span><span class="p">)</span>   <span class="c1">#load raw forecast</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;MH_ex1.npy&#39;</span><span class="p">)</span>   <span class="c1">#load MH data</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;OH_ex1.npy&#39;</span><span class="p">)</span>   <span class="c1">#load OH data</span>
+<span class="n">X_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;Raw_fcst_ex1.npy&#39;</span><span class="p">)</span>   <span class="c1">#load raw forecast</span>
 <span class="n">Y_t</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1">#made-up observation</span>
 </pre></div>
 </div>
@@ -276,9 +276,9 @@
 <p>For a situation when one of cases 2-4 are encountered (for any of the TAMH, TAOH, or raw forecast), we’ll actually use the exact same code used in Example 1. Of course different data are loaded. In this case, the forecast distribution satisfies case 2 (all but one ensemble member are 0 or 1).</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Change directory to where the data is stored and load data</span>
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;MH_case2.npy&#39;</span><span class="p">)</span> <span class="c1">#load MH data</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;OH_case2.npy&#39;</span><span class="p">)</span> <span class="c1">#load OH data</span>
-<span class="n">X_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;Raw_fcst_case2.npy&#39;</span><span class="p">)</span> <span class="c1">#load raw forecast</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;MH_ex2.npy&#39;</span><span class="p">)</span> <span class="c1">#load MH data</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;OH_ex2.npy&#39;</span><span class="p">)</span> <span class="c1">#load OH data</span>
+<span class="n">X_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;Raw_fcst_ex2.npy&#39;</span><span class="p">)</span> <span class="c1">#load raw forecast</span>
 <span class="n">Y_t</span> <span class="o">=</span> <span class="mf">0.5</span>   <span class="c1">#made-up observation</span>
 </pre></div>
 </div>
@@ -320,9 +320,9 @@
 <p>First however, we’ll load different data:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Change directory to where the data is stored and load data</span>
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;MH_case3.npy&#39;</span><span class="p">)</span> <span class="c1">#load MH data</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;OH_case3.npy&#39;</span><span class="p">)</span> <span class="c1">#load OH data</span>
-<span class="n">X_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;Raw_fcst_case3.npy&#39;</span><span class="p">)</span> <span class="c1">#load raw forecast</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;MH_ex3.npy&#39;</span><span class="p">)</span> <span class="c1">#load MH data</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;OH_ex3.npy&#39;</span><span class="p">)</span> <span class="c1">#load OH data</span>
+<span class="n">X_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;Raw_fcst_ex3.npy&#39;</span><span class="p">)</span> <span class="c1">#load raw forecast</span>
 <span class="n">Y_t</span> <span class="o">=</span> <span class="mf">0.15</span>  <span class="c1">#made-up observation</span>
 </pre></div>
 </div>
