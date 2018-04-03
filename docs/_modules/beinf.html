@@ -88,8 +88,6 @@
 
 <span class="sd">    ``_ppf``</span>
 
-<span class="sd">    ``_stats``</span>
-
 <span class="sd">    </span>
 <span class="sd">    Additional methods added to :class:`beinf` are:</span>
 
@@ -181,70 +179,6 @@
         <span class="n">choicelist</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">special</span><span class="o">.</span><span class="n">btdtri</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">gamma_</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">]</span>
               
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">condlist</span><span class="p">,</span> <span class="n">choicelist</span><span class="p">)</span>
-
-                
-    <span class="k">def</span> <span class="nf">_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">moments</span><span class="o">=</span><span class="s1">&#39;mv&#39;</span><span class="p">):</span>       
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="mf">1.0</span><span class="p">):</span>
-            <span class="c1"># When p=1, there is only a mass point at 0 and/or 1 and</span>
-            <span class="c1"># the statistical moments are </span>
-            <span class="c1"># computed from the bernoulli distribution</span>
-
-            <span class="n">prob_1</span> <span class="o">=</span> <span class="n">q</span>
-            <span class="n">prob_0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">q</span>       
-            <span class="n">mn</span> <span class="o">=</span> <span class="n">prob_1</span> <span class="c1">#mean</span>
-            <span class="n">var</span> <span class="o">=</span> <span class="n">prob_0</span><span class="o">*</span><span class="n">prob_1</span>  <span class="c1">#variance</span>
-
-            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span><span class="o">==</span><span class="mf">0.0</span><span class="p">:</span>
-                <span class="n">skew</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1">#force skewness=0 when variance=0</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">skew</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">prob_1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="c1">#skewness</span>
-            
-            <span class="k">if</span> <span class="n">var</span><span class="o">==</span><span class="mf">0.0</span><span class="p">:</span>
-                <span class="n">kurt</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># force kurtosis=0 when variance=0            </span>
-            <span class="n">kurt</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">var</span><span class="p">)</span> <span class="o">/</span> <span class="n">var</span> <span class="c1">#kurtosis</span>
-
-        <span class="k">else</span><span class="p">:</span>        
-            <span class="c1">#bernoulli statistical moments</span>
-            <span class="n">prob_1</span> <span class="o">=</span> <span class="n">q</span>
-            <span class="n">prob_0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">q</span>       
-            <span class="n">mu_bern</span> <span class="o">=</span> <span class="n">prob_1</span> <span class="c1">#mean</span>
-            <span class="n">var_bern</span> <span class="o">=</span> <span class="n">prob_0</span><span class="o">*</span><span class="n">prob_1</span>  <span class="c1">#variance</span>
-
-            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var_bern</span><span class="p">)</span><span class="o">==</span><span class="mf">0.0</span><span class="p">:</span>
-                <span class="n">skew_bern</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1">#force skewness=0 when variance=0</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">skew_bern</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">prob_1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var_bern</span><span class="p">)</span> <span class="c1">#skewness</span>
-            
-            <span class="k">if</span> <span class="n">var_bern</span><span class="o">==</span><span class="mf">0.0</span><span class="p">:</span>
-                <span class="n">kurt_bern</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># force kurtosis=0 when variance=0  </span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">kurt_bern</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">var_bern</span><span class="p">)</span> <span class="o">/</span> <span class="n">var_bern</span> <span class="c1">#kurtosis</span>
-    
-            <span class="c1">#beta statistical moments</span>
-            <span class="n">mu_beta</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>   <span class="c1">#mean</span>
-            <span class="n">var_beta</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="o">/</span><span class="p">((</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="mf">1.</span><span class="p">))</span>
-            <span class="n">skew_beta</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mf">1.0</span><span class="o">+</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">+</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>    <span class="c1">#skewness</span>
-       
-            <span class="c1">#kurtosis</span>
-            <span class="n">kurt_beta</span> <span class="o">=</span> <span class="mf">6.0</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">+</span><span class="n">b</span><span class="p">))</span>
-            <span class="n">kurt_beta</span> <span class="o">/=</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span>        
-    
-            <span class="c1"># In the case that p!=1.0, the statistics are computed </span>
-            <span class="c1"># as weighted averages of the statistics for the</span>
-            <span class="c1"># bernoulli and beta distributions, respectively by p and 1-p</span>
-           
-            <span class="c1"># Mean of beinf </span>
-            <span class="n">mn</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">mu_bern</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">mu_beta</span>
-
-            <span class="c1"># Variance of beinf</span>
-            <span class="n">var</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">var_bern</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">var_beta</span>
-            
-            <span class="c1"># skewness (weighted sum of skew for beta and bernoulli)</span>
-            <span class="n">skew</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">skew_bern</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">skew_beta</span>
-            <span class="c1"># kurtosis (wighted sum of kurtosis for beta and bernoullie)</span>
-            <span class="n">kurt</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">kurt_bern</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">kurt_beta</span>
-      
-        <span class="k">return</span> <span class="n">mn</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurt</span>
 
     <span class="k">def</span> <span class="nf">_argcheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">):</span>
         <span class="c1">#subclass the argcheck method to ensure parameters</span>

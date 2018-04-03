@@ -40,8 +40,6 @@ class beinf_gen(rv_continuous):
 
     ``_ppf``
 
-    ``_stats``
-
     
     Additional methods added to :class:`beinf` are:
 
@@ -133,70 +131,6 @@ class beinf_gen(rv_continuous):
         choicelist=[0.0, special.btdtri(a,b,gamma_), 1.0]
               
         return np.select(condlist, choicelist)
-
-                
-    def _stats(self, a, b, p, q, moments='mv'):       
-        if np.all(p==1.0):
-            # When p=1, there is only a mass point at 0 and/or 1 and
-            # the statistical moments are 
-            # computed from the bernoulli distribution
-
-            prob_1 = q
-            prob_0 = 1-q       
-            mn = prob_1 #mean
-            var = prob_0*prob_1  #variance
-
-            if np.sqrt(var)==0.0:
-                skew = 0.0 #force skewness=0 when variance=0
-            else:
-                skew = (1-2*prob_1) / np.sqrt(var) #skewness
-            
-            if var==0.0:
-                kurt = 0.0 # force kurtosis=0 when variance=0            
-            kurt = (1.0 - 6*var) / var #kurtosis
-
-        else:        
-            #bernoulli statistical moments
-            prob_1 = q
-            prob_0 = 1-q       
-            mu_bern = prob_1 #mean
-            var_bern = prob_0*prob_1  #variance
-
-            if np.sqrt(var_bern)==0.0:
-                skew_bern = 0.0 #force skewness=0 when variance=0
-            else:
-                skew_bern = (1-2*prob_1) / np.sqrt(var_bern) #skewness
-            
-            if var_bern==0.0:
-                kurt_bern = 0.0 # force kurtosis=0 when variance=0  
-            else:
-                kurt_bern = (1.0 - 6*var_bern) / var_bern #kurtosis
-    
-            #beta statistical moments
-            mu_beta = a*1.0 / (a + b)   #mean
-            var_beta = a*b/((a+b)**2.*(a+b+1.))
-            skew_beta = 2.0*(b-a)*np.sqrt((1.0+a+b)/(a*b)) / (2+a+b)    #skewness
-       
-            #kurtosis
-            kurt_beta = 6.0*(a**3 + a**2*(1-2*b) + b**2*(1+b) - 2*a*b*(2+b))
-            kurt_beta /= a*b*(a+b+2)*(a+b+3)        
-    
-            # In the case that p!=1.0, the statistics are computed 
-            # as weighted averages of the statistics for the
-            # bernoulli and beta distributions, respectively by p and 1-p
-           
-            # Mean of beinf 
-            mn = p*mu_bern + (1 - p)*mu_beta
-
-            # Variance of beinf
-            var = p*var_bern + (1 - p)*var_beta
-            
-            # skewness (weighted sum of skew for beta and bernoulli)
-            skew = p*skew_bern + (1 - p)*skew_beta
-            # kurtosis (wighted sum of kurtosis for beta and bernoullie)
-            kurt = p*kurt_bern + (1 - p)*kurt_beta
-      
-        return mn, var, skew, kurt
 
     def _argcheck(self,a,b,p,q):
         #subclass the argcheck method to ensure parameters

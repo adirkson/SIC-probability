@@ -19,10 +19,10 @@ class taqm():
     ``fit_data(X,Y,X_t)`` 
         BEINF parameters for the TAMH, TAOH, and the raw forecast
         
-    ``lin(m,b,T)`` 
+    ``lin(a1,b1,T)`` 
         linear equation values
     
-    ``piecewise_lin(m1,b1,m2,b2,t_b,T)`` 
+    ``piecewise_lin(a1,b1,a2,b2,t_b,T)`` 
         piece-wise linear equation values
 
     ``trend_adjust_1p(data_all,tau_t,t)``  
@@ -31,6 +31,9 @@ class taqm():
     ``trend_adjust_2p(data_all,tau_t,t,t_b=1999)``  
         trend-adjusted values using two periods
     
+    ``unpack_params(array)``
+        the individual parameters stored in array
+        
     '''
 
     def lin(self,a1,b1,T):
@@ -199,11 +202,12 @@ class taqm():
         return data_ta
 
     def trend_adjust_2p(self,data_all,tau_t,t,t_b=1999):
-        """Linearly detrend data_all and re-center it about its
+        """Piece-wise linearly detrend data_all and re-center it about its
         non-linear least squares fit to Eq. :eq:`pw2` evaluated at 
         :math:`T=` `t`. This method carries
         out the trend-adjustment technique described in section 5a
-        of Dirkson et al, 2018
+        of Dirkson et al, 2018. The non-linear least squares fit constrains
+        Eq. :eq:`pw2` to be continuous at :math:`T=t_b`.
         
         Args:
             data_all (ndarray):
@@ -426,5 +430,16 @@ class taqm():
         return x_t_cal_params, X_t_cal_beta
 
     def unpack_params(self,array):
+        '''
+        Unpacks the individual parameters a, b, p, q from array.
+        
+        Args:
+            array (ndarray):
+                Array containing the four parameters a,b,p,q for
+                a BEINF distribution.
+                
+        Returns: a,b,p,q (floats):
+            The individual parameters for the BEINF disribution.
+        '''
         a,b,p,q = map(lambda i: array[i], range(len(array)))
         return a,b,p,q
