@@ -16,9 +16,9 @@ import os
 # the tutorial. Simply change the filenames to load the data used
 # in Examples 2 and 3.
 os.chdir('Data') 
-X = np.load('MH.npy')   #load MH data
-Y = np.load('OH.npy')   #load OH data
-X_t = np.load('Raw_fcst.npy')   #load raw forecast
+X = np.load('MH_ex1.npy')   #load MH data
+Y = np.load('OH_ex1.npy')   #load OH data
+X_t = np.load('Raw_fcst_ex1.npy')   #load raw forecast
 Y_t = 0.2 #made-up observation
 
 
