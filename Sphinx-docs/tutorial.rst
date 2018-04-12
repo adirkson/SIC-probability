@@ -63,7 +63,7 @@ Additionally, we can plot its pdf and cdf over the interval [0,1] using the :py:
 
 .. plot:: pyplots/beinf_example1.py
 
-Now, we'll generate some random variates from this distribution using the :py:meth:`~scipy.stats.rv_continuous.rvs` method, and plot its histogram and empirical cumulative distribution function (utilizing the added :meth:`~beinf.beinf_gen.ecdf` method) along with the original distribution:
+Now, we'll generate some random variates from this distribution using the :py:meth:`~scipy.stats.rv_continuous.rvs` method, and plot its histogram and empirical cumulative distribution function along with the original distribution:
 
 .. code-block:: python
 
@@ -78,7 +78,7 @@ Now, we'll generate some random variates from this distribution using the :py:me
 
 .. plot:: pyplots/beinf_example2.py
 
-Note that we have used the :meth:`~beinf.beinf_gen.ecdf` method to compute the distribution function for the sample. We'll now fit this random sample to the BEINF distribution (using :meth:`~beinf.beinf_gen.fit`) and freeze a distribution object as :code:`rv_f`:
+Note that we have used the :meth:`~beinf.beinf_gen.ecdf` method to compute the empirical cumulative distribution function for the sample. We'll now fit this random sample to the BEINF distribution (using :meth:`~beinf.beinf_gen.fit`) and freeze a distribution object as :code:`rv_f`:
 
 .. code-block:: python
 
@@ -105,7 +105,7 @@ Trend-adjusted Quantile Mapping
 
 This section of the tutorial shows how to apply trend-adjusted quantile mapping (TAQM) using the :class:`taqm` class. The methods in this class are meant to be applied to the SIC variable at an individual grid cell. 
 
-In Example 1, we'll show how TAQM works for a grid cell for which the trend-adjusted modelled historical (TAMH) ensemble time series, the trend-adjusted observed historical (TAOH) time series, and the forecast ensemble can all be fit to the BEINF distribution (i.e. cases 1-4 are not encountered for any of these data samples). In Example 2, we'll show what happens when one of cases 2-4 is encountered. In Example 3, we'll go through a situation when case 1 is encountered (i.e. one of :math:`p_x=1`, :math:`p_y=1`, or :math:`p_{x_t}=1`). 
+In Example 1, we'll show how TAQM works for a grid cell for which the trend-adjusted modelled historical (TAMH) ensemble time series, the trend-adjusted observed historical (TAOH) time series, and the forecast ensemble can all be fit to the BEINF distribution (i.e. cases 1-4 described in Dirkson et al. 2018 are not encountered for any of these data samples). In Example 2, we'll show what happens when one of cases 2-4 is encountered. In Example 3, we'll go through a situation when case 1 is encountered (i.e. one of :math:`p_x=1`, :math:`p_y=1`, or :math:`p_{x_t}=1`). 
 
 ^^^^^^^^^^
 Example 1 
