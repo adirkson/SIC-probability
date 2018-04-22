@@ -85,7 +85,7 @@ p_x_t = X_t_params[2] # raw forecast
 p_x_ta = X_ta_params[2] # TAMH climatology
 p_y_ta = Y_ta_params[2] # TAOH climatology
 
-if trust_sharp_fcst==True and p_x_t==1:
+if trust_sharp_fcst==True and p_x_t==1.0:
     # go with the original forecast data/distribution 
     cdf_x_t_cal = beinf.cdf_eval(x,X_t_params,X_t)
     sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
