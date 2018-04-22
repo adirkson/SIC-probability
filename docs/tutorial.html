@@ -231,8 +231,11 @@
 <span class="n">sip_x_t</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">beinf</span><span class="o">.</span><span class="n">cdf_eval</span><span class="p">(</span><span class="n">x_l</span><span class="p">,</span> <span class="n">X_t_params</span><span class="p">,</span> <span class="n">X_t</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was “trusted” or the TAOH was “trusted” (when <span class="math">\(p_{x_t}=1\)</span>). These complications can be accounted for though simply using this <code class="code docutils literal"><span class="pre">if-else</span></code> statement.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">p_x_t</span> <span class="o">=</span> <span class="n">X_t_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">#we&#39;ll need this parameter for the forecast distribution</span>
+<p>Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was “trusted” or the TAOH was “trusted” (when <span class="math">\(p_{x_t}=1\)</span>). We must also deal with instances when any of <span class="math">\(p_{x_t}=1\)</span>, <span class="math">\(p_{x'}=1\)</span>, or <span class="math">\(p_{y'}=1\)</span>, since calibration cannot be performed. These complications can be accounted for using this <code class="code docutils literal"><span class="pre">if-else</span></code> statement.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># first, get the p parameter for the</span>
+<span class="n">p_x_t</span> <span class="o">=</span> <span class="n">X_t_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># raw forecast</span>
+<span class="n">p_x_ta</span> <span class="o">=</span> <span class="n">X_ta_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># TAMH climatology</span>
+<span class="n">p_y_ta</span> <span class="o">=</span> <span class="n">Y_ta_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># TAOH climatology</span>
 
 <span class="c1"># Evaluate cdf for the calibrated forecast distribution at x and calculate SIP</span>
 <span class="k">if</span> <span class="n">trust_sharp_fcst</span><span class="o">==</span><span class="bp">True</span> <span class="ow">and</span> <span class="n">p_x_t</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
@@ -240,8 +243,9 @@
     <span class="n">cdf_x_t_cal</span> <span class="o">=</span> <span class="n">beinf</span><span class="o">.</span><span class="n">cdf_eval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">X_t_params</span><span class="p">,</span> <span class="n">X_t</span><span class="p">)</span>
     <span class="n">sip_x_t_cal</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">beinf</span><span class="o">.</span><span class="n">cdf_eval</span><span class="p">(</span><span class="n">x_l</span><span class="p">,</span> <span class="n">X_t_params</span><span class="p">,</span> <span class="n">X_t</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">p_x_t</span><span class="o">==</span><span class="mf">1.0</span><span class="p">:</span>
-        <span class="c1"># go with the TAOH data/distribution</span>
+    <span class="k">if</span> <span class="n">p_x_t</span><span class="o">==</span><span class="mf">1.0</span> <span class="ow">or</span> <span class="n">p_x_ta</span><span class="o">==</span><span class="mf">1.0</span> <span class="ow">or</span> <span class="n">p_y_ta</span><span class="o">==</span><span class="mf">1.0</span><span class="p">:</span>
+        <span class="c1"># go with the TAOH data/distribution when any of the p parameters are</span>
+        <span class="c1"># one for the three distributions used in calibration</span>
         <span class="n">cdf_x_t_cal</span> <span class="o">=</span> <span class="n">beinf</span><span class="o">.</span><span class="n">cdf_eval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Y_ta_params</span><span class="p">,</span> <span class="n">Y_ta</span><span class="p">)</span>
         <span class="n">sip_x_t_cal</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">beinf</span><span class="o">.</span><span class="n">cdf_eval</span><span class="p">(</span><span class="n">x_l</span><span class="p">,</span> <span class="n">Y_ta_params</span><span class="p">,</span> <span class="n">Y_ta</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>

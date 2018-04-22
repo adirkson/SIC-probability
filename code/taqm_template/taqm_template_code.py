@@ -78,23 +78,28 @@ cdf_y_ta = beinf.cdf_eval(x,Y_ta_params,Y_ta)
 cdf_x_t = beinf.cdf_eval(x,X_t_params,X_t)
 sip_x_t = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
 
-# Evaluate cdf for the calibrated forecast distribution at x and calculate sip
+# Evaluate cdf for the calibrated forecast distribution at x and calculate sip...
 
-p_x_t = X_t_params[2] # will need this parameter
+# first, get the p parameter for the 
+p_x_t = X_t_params[2] # raw forecast
+p_x_ta = X_ta_params[2] # TAMH climatology
+p_y_ta = Y_ta_params[2] # TAOH climatology
 
 if trust_sharp_fcst==True and p_x_t==1:
     cdf_x_t_cal = beinf.cdf_eval(x,X_t_params,X_t)
     sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
 else:
-    if p_x_t==1.0:
+    if p_x_t==1.0 or p_x_ta==1.0 or p_y_ta==1.0:
+        # go with the TAOH data/distribution when any of the p parameters are 
+        # one for the three distributions used in calibration
         cdf_x_t_cal = beinf.cdf_eval(x,Y_ta_params,Y_ta)
         sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,Y_ta_params,Y_ta)
     else:
+        # go with the calibrated forecast data/distribution
         cdf_x_t_cal = beinf.cdf_eval(x,X_t_cal_params,X_t_cal)
         sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_cal_params,X_t_cal_params)
         
 # Compute the CRPS for the raw forecast and calibrated forecast
-                               
 cdf_obs = np.zeros(len(x)) 
 cdf_obs[Y_t*np.ones(len(x))<=x] = 1.0 # heaviside function for obs 
  

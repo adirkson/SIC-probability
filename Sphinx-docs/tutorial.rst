@@ -214,20 +214,24 @@ First, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cdf_
    cdf_x_t = beinf.cdf_eval(x, X_t_params, X_t)
    sip_x_t = 1.0 - beinf.cdf_eval(x_l, X_t_params, X_t)
 
-Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (when :math:`p_{x_t}=1`). These complications can be accounted for though simply using this :code:`if-else` statement.
+Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (when :math:`p_{x_t}=1`). We must also deal with instances when any of :math:`p_{x_t}=1`, :math:`p_{x'}=1`, or :math:`p_{y'}=1`, since calibration cannot be performed. These complications can be accounted for using this :code:`if-else` statement.
 
 .. code-block:: python
  
-   p_x_t = X_t_params[2] #we'll need this parameter for the forecast distribution
+   # first, get the p parameter for the 
+   p_x_t = X_t_params[2] # raw forecast 
+   p_x_ta = X_ta_params[2] # TAMH climatology
+   p_y_ta = Y_ta_params[2] # TAOH climatology
 
    # Evaluate cdf for the calibrated forecast distribution at x and calculate SIP
    if trust_sharp_fcst==True and p_x_t==1:
-       # go with the original forecast data/distribution
+       # go with the original forecast data/distribution 
        cdf_x_t_cal = beinf.cdf_eval(x, X_t_params, X_t) 
        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, X_t_params, X_t)
    else:
-       if p_x_t==1.0:
-           # go with the TAOH data/distribution
+       if p_x_t==1.0 or p_x_ta==1.0 or p_y_ta==1.0:
+           # go with the TAOH data/distribution when any of the p parameters are 
+           # one for the three distributions used in calibration
            cdf_x_t_cal = beinf.cdf_eval(x, Y_ta_params, Y_ta)  
 	   sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, Y_ta_params, Y_ta)
        else:
