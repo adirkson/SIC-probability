@@ -166,7 +166,7 @@ The MH and OH data loaded span the period :math:`\tau_t`. Now, we'll instantiate
        Y_ta = np.copy(Y)
 
 
-The user should note that there also exists a function for performing the trend adjustment using a piece-wise linear fit of the MH and OH time series, called :func:`~taqm.taqm.trend_adjust_1p`, where the breakpoint year of the piece-wise function is a user-defined input to the function (default is 1999).
+The user may note that there also exists a function for performing the trend adjustment using a piece-wise linear fit of the MH and OH time series (called :func:`~taqm.taqm.trend_adjust_2p`), where the breakpoint year of the piece-wise function is a user-defined input to the function (default is 1999).
 
 The following is a plot of :code:`X` and :code:`Y` (top panel), and :code:`X_ta` and :code:`Y_ta` (bottom panel), with the ensemble range for :code:`X` and :code:`X_ta` encapsulated in the shaded area.
  
