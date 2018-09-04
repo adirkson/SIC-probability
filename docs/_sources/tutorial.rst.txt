@@ -111,7 +111,7 @@ In Example 1, we'll show how TAQM works for a grid cell for which the trend-adju
 Example 1 
 ^^^^^^^^^^
 
-Define the time variables relevant to calibration. The complete hindcast record is from 1981-2017 and the forecast year is 2012. The range of years :math:`\tau_t` thus covers 1981-2012 excluding 2011:
+Define the time variables relevant to calibration. The complete hindcast record is from 1981-2017 and the forecast year is 2012. The range of years :math:`\tau_t`  to train the TAQM calibration method is thus 1981-2011.
 
 .. code-block:: python
 
