@@ -19,21 +19,21 @@ os.chdir('Data')
 X = np.load('MH_ex1.npy')   #load MH data
 Y = np.load('OH_ex1.npy')   #load OH data
 X_t = np.load('Raw_fcst_ex1.npy')   #load raw forecast
-Y_t = 0.2 #made-up observation
+Y_t = 0.0 #made-up observation
 
 
 # Time
 tau_s = 1981    #start year
-tau_f = 2012    #finish
+tau_f = 2017    #finish
 tau = np.arange(tau_s,tau_f+1)  #array of years in hindcast record
 
-t = 2011   #forecast year
-tau_t = tau[tau!=t]   # remove the forecast year from tau and call it tau_t
+t = 2012   #forecast year
+tau_t = tau[tau<t]   # remove the forecast year from tau and call it tau_t
  
 # divide the 0 to 1 interval into a range over 1000 values to compute
 # cdfs
 x = np.linspace(0, 1, 1000)
-x_l = 0.15 # SIC threshold for SIP
+x_c = 0.15 # SIC threshold for SIP
 
 #instantiate a taqm object
 taqm = taqm()
@@ -76,7 +76,7 @@ cdf_y_ta = beinf.cdf_eval(x,Y_ta_params,Y_ta)
 
 # Evaluate cdf for the raw forecast distribution at x and calculate sip
 cdf_x_t = beinf.cdf_eval(x,X_t_params,X_t)
-sip_x_t = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
+sip_x_t = 1.0 - beinf.cdf_eval(x_c,X_t_params,X_t)
 
 # Evaluate cdf for the calibrated forecast distribution at x and calculate sip...
 
@@ -88,17 +88,17 @@ p_y_ta = Y_ta_params[2] # TAOH climatology
 if trust_sharp_fcst==True and p_x_t==1.0:
     # go with the original forecast data/distribution 
     cdf_x_t_cal = beinf.cdf_eval(x,X_t_params,X_t)
-    sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_params,X_t)
+    sip_x_t_cal = 1.0 - beinf.cdf_eval(x_c,X_t_params,X_t)
 else:
     if p_x_t==1.0 or p_x_ta==1.0 or p_y_ta==1.0:
         # go with the TAOH data/distribution when any of the p parameters are 
         # one for the three distributions used in calibration
         cdf_x_t_cal = beinf.cdf_eval(x,Y_ta_params,Y_ta)
-        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,Y_ta_params,Y_ta)
+        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_c,Y_ta_params,Y_ta)
     else:
         # go with the calibrated forecast data/distribution
         cdf_x_t_cal = beinf.cdf_eval(x,X_t_cal_params,X_t_cal)
-        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l,X_t_cal_params,X_t_cal_params)
+        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_c,X_t_cal_params,X_t_cal_params)
         
 # Compute the CRPS for the raw forecast and calibrated forecast
 cdf_obs = np.zeros(len(x)) 

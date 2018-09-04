@@ -18,9 +18,9 @@ special_case = False
 
 # Change directory to where the data is stored and load data
 os.chdir('Data')
-X = np.load('MH_case2.npy') #load MH data
-Y = np.load('OH_case2.npy') #load OH data
-X_t = np.load('Raw_fcst_case2.npy') #load raw forecast
+X = np.load('MH_ex2.npy') #load MH data
+Y = np.load('OH_ex2.npy') #load OH data
+X_t = np.load('Raw_fcst_ex2.npy') #load raw forecast
 Y_t = 0.5   #made-up observation
 
 # Time

@@ -27,8 +27,8 @@ We can compute the sea ice probability (SIP) quantity (i.e. the probability that
 
 .. code-block:: python
    
-   x_l = 0.15
-   sip = 1.0 - rv.cdf(x_l)
+   x_c = 0.15
+   sip = 1.0 - rv.cdf(x_c)
 
 Additionally, we can plot its pdf and cdf over the interval [0,1] using the :py:meth:`~scipy.stats.rv_continuous.pdf` and :py:meth:`~scipy.stats.rv_continuous.cdf` methods:
 
@@ -63,7 +63,7 @@ Additionally, we can plot its pdf and cdf over the interval [0,1] using the :py:
 
 .. plot:: pyplots/beinf_example1.py
 
-Now, we'll generate some random variates from this distribution using the :py:meth:`~scipy.stats.rv_continuous.rvs` method, and plot its histogram and empirical cumulative distribution function (utilizing the added :meth:`~beinf.beinf_gen.ecdf` method) along with the original distribution:
+Now, we'll generate some random variates from this distribution using the :py:meth:`~scipy.stats.rv_continuous.rvs` method, and plot its histogram and empirical cumulative distribution function along with the original distribution:
 
 .. code-block:: python
 
@@ -78,7 +78,7 @@ Now, we'll generate some random variates from this distribution using the :py:me
 
 .. plot:: pyplots/beinf_example2.py
 
-Note that we have used the :meth:`~beinf.beinf_gen.ecdf` method to compute the distribution function for the sample. We'll now fit this random sample to the BEINF distribution (using :meth:`~beinf.beinf_gen.fit`) and freeze a distribution object as :code:`rv_f`:
+Note that we have used the :meth:`~beinf.beinf_gen.ecdf` method to compute the empirical cumulative distribution function for the sample. We'll now fit this random sample to the BEINF distribution (using :meth:`~beinf.beinf_gen.fit`) and freeze a distribution object as :code:`rv_f`:
 
 .. code-block:: python
 
@@ -105,13 +105,13 @@ Trend-adjusted Quantile Mapping
 
 This section of the tutorial shows how to apply trend-adjusted quantile mapping (TAQM) using the :class:`taqm` class. The methods in this class are meant to be applied to the SIC variable at an individual grid cell. 
 
-In Example 1, we'll show how TAQM works for a grid cell for which the trend-adjusted modelled historical (TAMH) ensemble time series, the trend-adjusted observed historical (TAOH) time series, and the forecast ensemble can all be fit to the BEINF distribution (i.e. cases 1-4 are not encountered for any of these data samples). In Example 2, we'll show what happens when one of cases 2-4 is encountered. In Example 3, we'll go through a situation when case 1 is encountered (i.e. one of :math:`p_x=1`, :math:`p_y=1`, or :math:`p_{x_t}=1`). 
+In Example 1, we'll show how TAQM works for a grid cell for which the trend-adjusted modelled historical (TAMH) ensemble time series, the trend-adjusted observed historical (TAOH) time series, and the forecast ensemble can all be fit to the BEINF distribution (i.e. cases 1-4 described in Dirkson et al. 2018 are not encountered for any of these data samples). In Example 2, we'll show what happens when one of cases 2-4 is encountered. In Example 3, we'll go through a situation when case 1 is encountered (i.e. one of :math:`p_x=1`, :math:`p_y=1`, or :math:`p_{x_t}=1`). 
 
 ^^^^^^^^^^
 Example 1 
 ^^^^^^^^^^
 
-Define the time variables relevant to calibration. The complete hindcast record is from 1981-2012 and the forecast year is 2011. The range of years :math:`\tau_t` thus covers 1981-2012 excluding 2011:
+Define the time variables relevant to calibration. The complete hindcast record is from 1981-2017 and the forecast year is 2012. The range of years :math:`\tau_t` thus covers 1981-2012 excluding 2011:
 
 .. code-block:: python
 
@@ -124,11 +124,11 @@ Define the time variables relevant to calibration. The complete hindcast record 
 
    # Time
    tau_s = 1981    #start year
-   tau_f = 2012    #finish year
+   tau_f = 2017    #finish year
    tau = np.arange(tau_s,tau_f+1)  #array of years in hindcast record
 
-   t = 2011   #forecast year
-   tau_t = tau[tau!=t]   # remove the forecast year from tau and call it tau_t
+   t = 2012   #forecast year
+   tau_t = tau[tau<t]   # only retain those years in tau which preceed the forecast year. This corresponds to TAQM-PAST in Dirkson et al 
 
 
 Load the model historical (MH) ensemble time series, observed historical (OH) time series, and the forecast ensemble.
@@ -139,9 +139,9 @@ Load the model historical (MH) ensemble time series, observed historical (OH) ti
    X = np.load('MH_ex1.npy')   #load MH data
    Y = np.load('OH_ex1.npy')   #load OH data
    X_t = np.load('Raw_fcst_ex1.npy')   #load raw forecast
-   Y_t = 0.2 #made-up observation
+   Y_t = 0.0 #made-up observation
 
-The MH and OH data are already absent for the forecast year :math:`t` in these arrays. Now, we'll instantiate a :class:`taqm` object, and perform the trend-adjustment on the MH and OH data using the :func:`~taqm.taqm.trend_adjust_2p` method:
+The MH and OH data loaded span the period :math:`\tau_t`. Now, we'll instantiate a :class:`taqm` object, and perform the trend adjustment on the MH and OH data using the :func:`~taqm.taqm.trend_adjust_1p` method. 
 
 .. code-block:: python
 
@@ -151,7 +151,7 @@ The MH and OH data are already absent for the forecast year :math:`t` in these a
    pval_x = linregress(tau_t,X.mean(axis=1))[3]  #check the p-value for MH trend over tau_t                  
    if pval_x<0.05:
        # if significant, then adjust MH for the trend to create TAMH
-       X_ta = taqm.trend_adjust_2p(X,tau_t,t,t_b=1999)
+       X_ta = taqm.trend_adjust_1p(X,tau_t,t,t_b=1999)
    else:
        # else, set TAMH equal to MH (i.e. don't perform the trend adjustment) 
        X_ta = np.copy(X)
@@ -160,10 +160,13 @@ The MH and OH data are already absent for the forecast year :math:`t` in these a
    pval_y = linregress(tau_t,Y)[3]     #check p-value for OH trend over tau_t                  
    if pval_y<0.05:   
        # if significant, then adjust OH for the trend to create TAOH
-       Y_ta = taqm.trend_adjust_2p(Y,tau_t,t,t_b=1999) 
+       Y_ta = taqm.trend_adjust_1p(Y,tau_t,t,t_b=1999) 
    else:
        # else, set TAOH equal to OH (i.e. don't perform the trend adjustment) 
        Y_ta = np.copy(Y)
+
+
+The user should note that there also exists a function for performing the trend adjustment using a piece-wise linear fit of the MH and OH time series, called :func:`~taqm.taqm.trend_adjust_1p`, where the breakpoint year of the piece-wise function is a user-defined input to the function (default is 1999).
 
 The following is a plot of :code:`X` and :code:`Y` (top panel), and :code:`X_ta` and :code:`Y_ta` (bottom panel), with the ensemble range for :code:`X` and :code:`X_ta` encapsulated in the shaded area.
  
@@ -189,7 +192,7 @@ Now calibrate the forecast ensemble using the :func:`~taqm.taqm.calibrate` metho
    X_t_cal_params, X_t_cal = taqm.calibrate(X_ta_params, Y_ta_params, X_t_params,
                                                    X_ta, Y_ta, X_t,trust_sharp_fcst) 
    print np.around(X_t_cal_params,4)
-   >>> [ 0.4193  2.6118  0.1968  0.    ]
+   >>> [ 1.9363  6.2418  0.7129  0.    ]
    print np.around(X_t_cal,4)
    >>> [ inf  inf  inf  inf  inf  inf  inf  inf  inf  inf]
 
@@ -202,7 +205,7 @@ First, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cdf_
 .. code-block:: python
   
    x = np.linspace(0, 1, 1000)
-   x_l = 0.15
+   x_c = 0.15
 
    # Evaluate cdf for the TAMH distribution at x
    cdf_x_ta = beinf.cdf_eval(x, X_ta_params, X_ta)
@@ -212,34 +215,39 @@ First, evaluate the cdf for each of these using the :meth:`~beinf.beinf_gen.cdf_
 
    # Evaluate cdf for the forecast distribution at x and calculate SIP
    cdf_x_t = beinf.cdf_eval(x, X_t_params, X_t)
-   sip_x_t = 1.0 - beinf.cdf_eval(x_l, X_t_params, X_t)
+   sip_x_t = 1.0 - beinf.cdf_eval(x_c, X_t_params, X_t)
 
-Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (when :math:`p_{x_t}=1`). These complications can be accounted for though simply using this :code:`if-else` statement.
+Evaluating the cdf for the calibrated forecast ensemble is slightly more complicated than above, because we must deal with instances when either the raw forecast was "trusted" or the TAOH was "trusted" (when :math:`p_{x_t}=1`). We must also deal with instances when any of :math:`p_{x_t}=1`, :math:`p_{x'}=1`, or :math:`p_{y'}=1`, since calibration cannot be performed. These complications can be accounted for using this :code:`if-else` statement.
 
 .. code-block:: python
  
-   p_x_t = X_t_params[2] #we'll need this parameter for the forecast distribution
+   # first, get the p parameter for the 
+   p_x_t = X_t_params[2] # raw forecast 
+   p_x_ta = X_ta_params[2] # TAMH climatology
+   p_y_ta = Y_ta_params[2] # TAOH climatology
 
    # Evaluate cdf for the calibrated forecast distribution at x and calculate SIP
-   if trust_sharp_fcst==True and p_x_t==1:
-       # go with the original forecast data/distribution
+   if trust_sharp_fcst==True and p_x_t==1.0:
+       # go with the original forecast data/distribution when any of the p parameters are one
+       # for the three distributions used in calibration 
        cdf_x_t_cal = beinf.cdf_eval(x, X_t_params, X_t) 
-       sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, X_t_params, X_t)
+       sip_x_t_cal = 1.0 - beinf.cdf_eval(x_c, X_t_params, X_t)
    else:
-       if p_x_t==1.0:
-           # go with the TAOH data/distribution
+       if p_x_t==1.0 or p_x_ta==1.0 or p_y_ta==1.0:
+           # go with the TAOH data/distribution when any of the p parameters are 
+           # one for the three distributions used in calibration
            cdf_x_t_cal = beinf.cdf_eval(x, Y_ta_params, Y_ta)  
-	   sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, Y_ta_params, Y_ta)
+	   sip_x_t_cal = 1.0 - beinf.cdf_eval(x_c, Y_ta_params, Y_ta)
        else:
            # go with the calibrated forecast data/distribution
            cdf_x_t_cal = beinf.cdf_eval(x, X_t_cal_params, X_t_cal)   
-           sip_x_t_cal = 1.0 - beinf.cdf_eval(x_l, X_t_cal_params, X_t_cal)
+           sip_x_t_cal = 1.0 - beinf.cdf_eval(x_c, X_t_cal_params, X_t_cal)
         
 Here are the cdfs for each of these distributions:
 
 .. plot:: pyplots/taqm_example1_cdfs.py
 
-This is how we can calculate the CRPS for this forecast based on the observed value :code:`Y_t=0.2`.
+This is how we can calculate the CRPS for this forecast based on the observed value :code:`Y_t=0.0`.
 
 .. code-block:: python
  
@@ -250,12 +258,12 @@ This is how we can calculate the CRPS for this forecast based on the observed va
    # CRPS for the raw forecast
    crps_x_t = np.trapz((cdf_x_t - cdf_obs)**2.,x)
    print crps_x_t
-   >>> 0.135445548061
+   >>> 0.0277481871254
 
    # CRPS for the calibrated forecast
    crps_x_t_cal = np.trapz((cdf_x_t_cal - cdf_obs)**2.,x)
    print crps_x_t_cal
-   >>> 0.0880923964244
+   >>> 0.0130610287303
 
 
 ^^^^^^^^^^

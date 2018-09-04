@@ -14,19 +14,19 @@ import os
 
 # Change directory to where the data is stored and load data
 os.chdir('Data')
-X = np.load('MH.npy')   #load MH data
-Y = np.load('OH.npy')   #load OH data
-X_t = np.load('Raw_fcst.npy')   #load raw forecast
+X = np.load('MH_ex1.npy')   #load MH data
+Y = np.load('OH_ex1.npy')   #load OH data
+X_t = np.load('Raw_fcst_ex1.npy')   #load raw forecast
 Y_t = 0.2 #made-up observation
 
 
 # Time
 tau_s = 1981    #start year
-tau_f = 2012    #finish
+tau_f = 2017    #finish
 tau = np.arange(tau_s,tau_f+1)  #array of years in hindcast record
 
-t = 2011   #forecast year
-tau_t = tau[tau!=t]   # remove the forecast year from tau and call it tau_t
+t = 2012   #forecast year
+tau_t = tau[tau<t]   # remove the forecast year from tau and call it tau_t
  
 #instantiate a taqm object
 taqm = taqm()
@@ -35,7 +35,7 @@ taqm = taqm()
 pval_x = linregress(tau_t,X.mean(axis=1))[3]  #check p-value for MH trend over tau_t                 
 if pval_x<0.05:
     # if significant, then adjust MH for the trend to create TAMH
-    X_ta = taqm.trend_adjust_2p(X,tau_t,t)
+    X_ta = taqm.trend_adjust_1p(X,tau_t,t)
 else:
     # else, set TAMH equal to MH (i.e. don't perform the trend adjustment) 
     X_ta = np.copy(X)
@@ -44,7 +44,7 @@ else:
 pval_y = linregress(tau_t,Y)[3]     #check p-value for OH trend over tau_t             
 if pval_y<0.05:   
     # if significant, then adjust OH for the trend to create TAOH
-    Y_ta = taqm.trend_adjust_2p(Y,tau_t,t) 
+    Y_ta = taqm.trend_adjust_1p(Y,tau_t,t) 
 else:
     # else, set TAOH equal to OH (i.e. don't perform the trend adjustment) 
     Y_ta = np.copy(Y)
@@ -56,8 +56,6 @@ ax1.plot(tau_t,X.mean(axis=1),'k',lw=2,label='MH')
 ax1.plot(tau_t,X_ta.mean(axis=1),'green',lw=2,ls='-',label='TAMH') 
 ax1.legend(loc='lower left')
 
-ax1.vlines(1999,-0.02,1.02,linewidths=1.5,linestyles='-',
-          colors='0.5')
 
 ax1.fill_between(tau_t,X.min(axis=1),
                  X.max(axis=1),color='k',alpha=0.2)  
@@ -71,10 +69,7 @@ ax1.set_ylabel('Sea Ice Concentration')
 ax2 = fig.add_subplot(2,1,2)    
 ax2.plot(tau_t,Y,'k',lw=2,label='OH')  
 ax2.plot(tau_t,Y_ta,'orange',lw=2,ls='-',label='TAOH') 
-ax2.legend(loc='upper right')
-
-ax2.vlines(1999,-0.02,1.02,linewidths=1.5,linestyles='-',
-          colors='0.5') 
+ax2.legend(loc='lower left')
 
 ax2.set_ylim((-0.02,1.02))
 ax2.set_ylabel('Sea Ice Concentration')
