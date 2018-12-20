@@ -90,7 +90,7 @@ class beinf_gen(rv_continuous):
             y[x==0.0] = 1.0
             return y
            
-        vals = delta(x)*p*(1-q) + (1.-p)*np.exp(logpdf_beta(x,a,b)) - p*q*delta(x-1.)
+        vals = delta(x)*p*(1-q) + (1.-p)*np.exp(logpdf_beta(x,a,b)) + p*q*delta(x-1.)
         # boolean list for random variable
         return vals
         

@@ -42,7 +42,7 @@ taqm = taqm()
 pval_x = linregress(tau_t,X.mean(axis=1))[3]  #check p-value for MH trend over tau_t                 
 if pval_x<0.05:
     # if significant, then adjust MH for the trend to create TAMH
-    X_ta = taqm.trend_adjust_2p(X,tau_t,t)
+    X_ta = taqm.trend_adjust_1p(X,tau_t,t)
 else:
     # else, set TAMH equal to MH (i.e. don't perform the trend adjustment) 
     X_ta = np.copy(X)
@@ -51,7 +51,7 @@ else:
 pval_y = linregress(tau_t,Y)[3]     #check p-value for OH trend over tau_t             
 if pval_y<0.05:   
     # if significant, then adjust OH for the trend to create TAOH
-    Y_ta = taqm.trend_adjust_2p(Y,tau_t,t) 
+    Y_ta = taqm.trend_adjust_1p(Y,tau_t,t) 
 else:
     # else, set TAOH equal to OH (i.e. don't perform the trend adjustment) 
     Y_ta = np.copy(Y)

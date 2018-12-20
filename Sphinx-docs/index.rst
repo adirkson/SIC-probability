@@ -29,7 +29,7 @@ Indices and tables
 
 References
 -----------
-Dirkson, A., Merryfield, W. J., & Monahan, A. (2018). Calibrated Probabilistic Forecasts of Sea Ice Concentration. `Journal of Climate`, submitted.
+Dirkson, A., Merryfield, W. J., & Monahan, A. (2018). Calibrated Probabilistic Forecasts of Arctic Sea Ice Concentration. `Journal of Climate`, Accepted.
 
 Ospina, R., & Ferrari, S. L. (2010). Inflated beta distributions. `Statistical Papers`, 51(1), 111.
 
