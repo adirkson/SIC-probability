@@ -98,7 +98,7 @@ else:
     else:
         # go with the calibrated forecast data/distribution
         cdf_x_t_cal = beinf.cdf_eval(x,X_t_cal_params,X_t_cal)
-        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_c,X_t_cal_params,X_t_cal_params)
+        sip_x_t_cal = 1.0 - beinf.cdf_eval(x_c,X_t_cal_params,X_t_cal)
         
 # Compute the CRPS for the raw forecast and calibrated forecast
 cdf_obs = np.zeros(len(x)) 
