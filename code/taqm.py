@@ -413,7 +413,13 @@ class taqm():
                 else:
                     #revert to empirical-based quantile mapping
                     X_t_cal_beta = np.percentile(Y_beta,beinf.ecdf(X_t_beta,X_beta)*100.,interpolation='linear')
-            
+                
+                # the quantile mapped values in the X_t_cal_beta array should never be zero or one,
+                # but due to rounding in python this sometimes occurs. In these cases
+                # change those values to epsilon or 1-epsilon. (epsilon=1e-12)
+                X_t_cal_beta[X_t_cal_beta==0.0] = 1e-12 
+                X_t_cal_beta[X_t_cal_beta==1.0] = 1.0 - 1e-12 
+
                 cases = beinf.check_cases(X_t_cal_beta)
                 #Solving of Eq. 8 (quantile mapping)
                 if cases==False:                
